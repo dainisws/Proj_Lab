@@ -24,7 +24,7 @@ Sabalansētas ēdienkartes plānošana
 |**[weekly-menu](https://github.com/charlieMKR/weekly-menu)**|  Ar skripta palīdzību var ģenerēt līdzsvarotu ēdienkarti piecām ēdienreizēm dienā, ņemot vērā lietotāja uztura priekšrocības.  |
 |**[Astro.js-Chef-Project](https://github.com/fahad0samara/Astro.js-Chef-Project)**|Šis projekts nodrošina visaptverošu risinājumu maltīšu plānošanai un recepšu pārvaldībai, palīdzot lietotājiem uzturēt veselīgu uzturu. Tas vienkāršo maltīšu plānošanu un jaunu recepšu atklāšanu.|
 
-### 3. Novērojumu tabula
+#### 3. Novērojumu tabula
 
 | **Risinājums**                                           | **Funkcionalitātes**                                                                                                                                                  | **Tehnoloģijas**                     |
 |----------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------|

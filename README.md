@@ -51,3 +51,27 @@ Sabalansētas ēdienkartes plānošana
 - Algoritmi, kas balstīti uz mašīnmācīšanās metodēm, ļauj labāk izprast lietotāju paradumus un sniegt personalizētākus ieteikumus.
 - Personalizācija ir atslēgas faktors veiksmīgā uztura plānošanas rīkā, un tajā jāiekļauj dažādi faktori, piemēram, veselības stāvoklis, alerģijas un uztura mērķi.
 - Vairāki rīki piedāvā arī integrētas funkcijas, piemēram, iepirkumu sarakstu ģenerēšanu vai receptes, kas atvieglo lietotāja ikdienu.
+
+##  •Prasību apkopojums
+| **Nr.** | **Lietotāju stāsts** | **Prioritāte** |
+|-|-|-|
+|1|Lietotājs vēlas iespēju izvēlēties veikalu, jo dažādu iemeslu dēļ tam interesē konkrēts veikals, vai tas nevēlas pirkt preces vienlaicīgi no vairākiem veikaliem.|S|
+|2|Lietotājs vēlas gatavošanai patērēt ne vairāk laika par norādīto, jo tam ir ierobežots laiks, ko dienā var atvēlēt gatavošanai.|S|
+|3|Lietotājs vēlas iespēju norādīt cik kalorijas un uzturvielas viņš grib uzņemt, jo vēlas nodrošināt sabalansētu uzturu atbilstoši saviem mērķiem/diētai.|M|
+|4|Lietotājs vēlas norādīt kuri ēdieni viņam garšo labāk un ēdiena garšas robežu lietotnei, jo vēlas paēst garšīgi.|S|
+|5|Lietotājs vēlas atzīmēt alergēnus, jo nevēlas, lai lietotne ietektu ēdienu, kas var izraisīt alerģiskas reakcijas.|M|
+|6|Lietotajs vēlas saglabāt savus datus, jo nevēlas ievadīt tos atkārtoti pie nākamās lietotnes lietošanas reizes.|S|
+|7|Lietotājs vēlas izvēlētos ēdienus vai receptes no lietotnes pievienot grozam izvēlētajā veikalā, jo tas samazina patērēto laiku ēdienu un izejvielu meklēšanai.|C|
+|8|Lietotājs vēlas, lai sistēma varētu ieteiktu arī lietotāja receptes, jo lietotnē šāda recepte var nebūt.|S|
+|9|Lietotājs vēlas izvēlēties balansu starp ēdiena cenu un ēdiena garšīgumu, jo grib, lai sistēma izvēlētos labākos ēdienus saskaņā ar lietotāja mērķiem.|S|
+
+Prioritātēm izvelētā metode: MoSCoW
+| **Apzīmējums** | **Atšifrējums** |
+|-|-|
+|M|Obligāti jābūt (Must Have)|
+|S|Vajadzētu būt (Should have)|
+|C|Varētu būt (Could have)|
+|W|Nevajadzētu būt (Would not have)|
+
+##  •Konceptu modelis
+![alt text](https://raw.githubusercontent.com/dainisws/Proj_Lab/refs/heads/main/konceptu_modelis.jpg)

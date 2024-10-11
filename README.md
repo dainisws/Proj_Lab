@@ -74,4 +74,4 @@ Prioritātēm izvelētā metode: MoSCoW
 |W|Nevajadzētu būt (Would not have)|
 
 ##  •Konceptu modelis
-![alt text](https://raw.githubusercontent.com/dainisws/Proj_Lab/refs/heads/main/konceptu_modelis.jpg)
+![alt text](https://raw.githubusercontent.com/dainisws/Proj_Lab/refs/heads/main/konceptu_modelis.png)

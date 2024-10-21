@@ -1,4 +1,3 @@
-![image](https://github.com/user-attachments/assets/54e5d5a1-ec79-4361-8cad-dc8569132499)# Proj_Lab
 ##  •Ievads
 Sabalansētas ēdienkartes plānošana
 ##  •Līdzīgo risinājumu pārskats

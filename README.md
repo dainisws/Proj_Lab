@@ -60,7 +60,7 @@ Sabalansētas ēdienkartes plānošana
 |4|Lietotājs vēlas norādīt kuri ēdieni viņam garšo labāk un ēdiena garšas robežu lietotnei, jo vēlas paēst garšīgi.|S|
 |5|Lietotājs vēlas atzīmēt alergēnus, jo nevēlas, lai lietotne ietektu ēdienu, kas var izraisīt alerģiskas reakcijas.|M|
 |6|Lietotajs vēlas saglabāt savus datus, jo nevēlas ievadīt tos atkārtoti pie nākamās lietotnes lietošanas reizes.|S|
-|7|Lietotājs vēlas izvēlētos ēdienus vai receptes pievienot pirkuma grozam, jo tas atvieglo pirkuma saraksta izveidošanas procesu.|M|
+|7|Lietotājs vēlas izvēlētos gatavos ēdienus vai recepšu izejvielas pievienot pirkuma grozam, jo tas atvieglo pirkuma saraksta izveidošanas procesu.|M|
 |8|Lietotājs vēlas, lai sistēma varētu ieteiktu arī lietotāja receptes, jo lietotnē šāda recepte var nebūt.|S|
 |9|Lietotājs vēlas izvēlēties balansu starp ēdiena cenu un ēdiena garšīgumu, jo grib, lai sistēma izvēlētos labākos ēdienus saskaņā ar lietotāja mērķiem.|S|
 |10|Lietotājs vēlas, lai pirkuma grozu varētu ērti dublēt izvēlētajā e-veikala lietotnē, jo tas samazina patērēto laiku ēdienu pasūtīšanai.|C|

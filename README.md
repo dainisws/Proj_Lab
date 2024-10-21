@@ -1,4 +1,4 @@
-# Proj_Lab
+![image](https://github.com/user-attachments/assets/54e5d5a1-ec79-4361-8cad-dc8569132499)# Proj_Lab
 ##  •Ievads
 Sabalansētas ēdienkartes plānošana
 ##  •Līdzīgo risinājumu pārskats
@@ -75,7 +75,7 @@ Prioritātēm izvelētā metode: MoSCoW
 |W|Nevajadzētu būt (Would not have)|
 
 ##  •Konceptu modelis
-![alt text](https://raw.githubusercontent.com/dainisws/Proj_Lab/refs/heads/main/konceptu_modelis2.png)
+![alt text](https://raw.githubusercontent.com/dainisws/Proj_Lab/refs/heads/main/konceptu_modelis3.png)
 
 ##  •Tehnoloģiju steks
 ![alt text](https://raw.githubusercontent.com/dainisws/Proj_Lab/refs/heads/main/tehnologiju_steks.png)

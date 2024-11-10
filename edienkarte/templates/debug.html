@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Debug Template</title>
+    </head>
+    <body>
+        <h1>List of foods</h1>
+        <table border="1">
+            <tr>
+                <th>id</th>
+                <th>store</th>
+                <th>name</th>
+                <th>main_catagory</th>
+                <th>last_category</th>
+                <th>amount</th>
+                <th>pricePerKg</th>
+                <th>calories</th>
+                <th>protein</th>
+                <th>fat</th>
+                <th>carbs</th>
+                <th>info</th>
+                <th>link</th>
+            </tr>
+            {% for f in foods%}
+            <TR>
+                <TD>{{f.id}}</TD>
+                <TD>{{f.store}}</TD>
+                <TD>{{f.name}}</TD>
+                <TD>{{f.main_category}}</TD>
+                <TD>{{f.last_category}}</TD>
+                <TD>{{f.amount}}</TD>
+                <TD>{{f.pricePerKg}}</TD>
+                <TD>{{f.calories}}</TD>
+                <TD>{{f.protein}}</TD>
+                <TD>{{f.fat}}</TD>
+                <TD>{{f.carbs}}</TD>
+                <TD>{{f.info}}</TD>
+                <TD>{{f.link}}</TD>
+            </TR>
+            {% endfor %}
+        </table>
+    </body>
+</html>

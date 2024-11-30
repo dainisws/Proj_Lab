@@ -78,3 +78,7 @@ Prioritātēm izvelētā metode: MoSCoW
 
 ##  •Tehnoloģiju steks
 ![alt text](https://raw.githubusercontent.com/dainisws/Proj_Lab/refs/heads/main/tehnologiju_steks.png)
+
+## •Risinājuma novērtēšanas plāns
+![image](https://github.com/user-attachments/assets/be2db296-70cb-44b7-bcb7-778b73a58806)
+

@@ -4,182 +4,19 @@
 <head> 
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Trešais makets</title> 
+  <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/logoo.ico') }}">
+  <title>ToiT</title>
   <style type="text/css"> 
    /* General body styling */
-   body { 
-    font: 11pt Arial, Helvetica, sans-serif;  
-    margin: 0;  
-    background-color: #343434;
-    background-image: linear-gradient(to bottom, #211f20, #342130);
-   } 
    
-   h1 { 
-    font-size: 36px;  
-    margin: 0;  
-    color: #fc6;  
-   } 
-
-   /* Header styling */
-   #header {  
-    background: #000000;  
-    padding: 10px;  
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-   } 
-
-   /* Flexbox for navigation links */
-   .nav-links {
-     display: flex;
-     gap: 20px;
-     color: #fff;
-   }
-   .nav-links p {
-     margin: 0;
-     cursor: pointer;
-     color: #fff; 
-   }
-   .nav-links p:hover {
-     color: #fc6; /* Color change on hover */
-   }
-
-   /* Adjust the logo and cart position */
-   .moved-image {
-    margin-right: 20px;
-   }
-   .moved-image-cart {
-    cursor: pointer;
-   }
-
-   /* Center the main content */
-   #main {
-     display: flex;
-     flex-direction: column;
-     align-items: center;
-     text-align: center;
-     padding: 40px 20px;
-     font-size: 18px;
-     position: relative;
-   }
-   .moved-image-biglogo {
-     max-width: 80%; /* Responsive scaling */
-     height: auto;
-     margin: 0 auto;
-   }
-   .centered-text{
-     color: #acaaaa;
-     margin-top: 20px;
-     max-width: 80%;
-     font-size: 37px;
-   }
-   .centered-text2 {
-     color: #acaaaa;
-     margin-top: 20px;
-     max-width: 80%;
-     font-size: 25px;
-   }
-
-   /* Styling for the Sign Up button */
-   .signup-button {
-     margin-top: 20px;
-     padding: 10px 20px;
-     background-color: #fc6;
-     border: none;
-     color: #000;
-     font-size: 16px;
-     cursor: pointer;
-     border-radius: 5px;
-     transition: background-color 0.3s ease;
-   }
-   .signup-button:hover {
-     background-color: #ffc107; /* Slightly brighter on hover */
-   }
-
-   /* Enlarged rotated images on the left and right */
-   .left-example {
-     position: absolute;
-     top: 620px;
-     left: 5%;
-     transform: rotate(-17deg);
-     max-width: 450px; /* Enlarged 3 times */
-     height: auto;
-   }
-
-   .right-example {
-     position: absolute;
-     top: 590px;
-     right: 5%;
-     transform: rotate(15deg);
-     max-width: 450px; /* Enlarged 3 times */
-     height: auto;
-   }
-
-   /* Footer styling */
-   #footer {  
-    background: #000000;  
-    padding: 5px;  
-    color: #686868;  
-    text-align: center;
-    width: 100%;
-   } 
-
-   /* Media queries for responsive layout adjustments */
-   @media (max-width: 768px) {
-     h1 { font-size: 28px; }
-     #header { flex-direction: column; align-items: center; }
-     .moved-image-cart, .moved-image { width: 50px; height: auto; }
-     .nav-links { flex-direction: column; align-items: center; gap: 10px; }
-     .left-example, .right-example { display: none; } /* Hide rotated images on smaller screens */
-   }
-   
-   @media (max-width: 480px) {
-     h1 { font-size: 24px; }
-     .centered-text, .centered-text2 { font-size: 10pt; }
-   }
-   .content-boxes {
-     display: flex;
-     gap: 20px;
-     flex-wrap: wrap;
-     justify-content: center;
-     margin-top: 40px;
-   }
-   .box {
-     background-color: #1e1e1e;
-     border: 1px solid #444;
-     border-radius: 8px;
-     padding: 20px;
-     max-width: 300px;
-     color: #ddd;
-     text-align: left;
-   }
-   .box img {
-     width: 100%;
-     border-radius: 8px;
-     margin-bottom: 10px;
-   }
-   .box h3 {
-     color: #a0a0a0;
-     font-size: 1.2em;
-     margin-top: 0;
-   }
-    
   </style> 
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styleHome.css') }}">
+
 </head> 
+
 <body> 
   <!-- Header with logo, navigation, and cart icon -->
-  <div id="header">
-    <img src="{{ url_for('static', filename='images/logoo.png') }}" alt="logoo" width="72" height="81" class="moved-image">
-    <div class="nav-links">
-      <p onclick="window.location.href='/';">Home</p>
-      <p onclick="window.location.href='/generator';">Menu Generator</p>
-      <p onclick="window.location.href='/documentation';">Documentation</p>
-      <p onclick="window.open('https://github.com/dainisws/Proj_Lab');">Repository</p>
-      <p onclick="window.location.href='/legal';">Legal</p>
-    </div>
-    <img src="{{ url_for('static', filename='images/Icon.png') }}" alt="cart" width="32" height="32" class="moved-image-cart" onclick="window.location.href='/cart';">
-  </div> 
+  {% include "header.html" %}
 
   <!-- Main content area with logo and descriptions -->
   <div id="main"> 
@@ -204,43 +41,46 @@
       <!-- Box 1 -->
       <div class="box">
         <img src="{{ url_for('static', filename='images/img1.png') }}" alt="Highly Customizable Icon">
-        <h3>Highly Customizable</h3>
-        <p>Choose properties like:</p>
-        <ul>
-          <li>Preferred Store</li>
-          <li>Food Preferences</li>
-          <li>Price/Taste Ratio</li>
-          <li>Calories</li>
-          <li>Nutrients</li>
-          <li>And more...</li>
-        </ul>
+        <div class="box-txt">
+          <h3>Highly Customizable</h3>
+          <p>Choose properties like:</p>
+          <ul>
+            <li>Preferred Store</li>
+            <li>Food Preferences</li>
+            <li>Price/Taste Ratio</li>
+            <li>Calories</li>
+            <li>Nutrients</li>
+            <li>And more...</li>
+          </ul>
+        </div>
       </div>
 
       <!-- Box 2 -->
       <div class="box">
         <img src="{{ url_for('static', filename='images/img2.png') }}" alt="Free Icon">
-        <h3>Free</h3>
-        <p>Access to all features:</p>
-        <ul>
-          <li>Account</li>
-          <li>Custom recipes</li>
-          <li>Computation</li>
-          <li>Results</li>
-          <li>Shopping cart</li>
-          <li>And more...</li>
-        </ul>
+        <div class="box-txt">
+          <h3>Free</h3>
+          <p>Access to all features:</p>
+          <ul>
+            <li>Account</li>
+            <li>Custom recipes</li>
+            <li>Computation</li>
+            <li>Results</li>
+            <li>Shopping cart</li>
+            <li>And more...</li>
+          </ul>
+        </div>
       </div>
 
       <!-- Box 3 -->
       <div class="box">
         <img src="{{ url_for('static', filename='images/img3.png') }}" alt="Optimization Icon">
-        <h3>Optimization</h3>
-        <p>Menu Generator uses mathematical programming to find the best meals for you based on the chosen price/taste ratio, while not exceeding or falling short of your nutrition goals.</p>
+        <div class="box-txt">
+          <h3>Optimization</h3>
+          <p>Menu Generator uses mathematical programming to find the best meals for you based on the chosen price/taste ratio, while not exceeding or falling short of your nutrition goals.</p>
+        </div>
       </div>
     </div>
-  </div> 
-
-
   </div> 
 
   <!-- Footer with copyright info -->

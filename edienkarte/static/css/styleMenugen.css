@@ -1,0 +1,290 @@
+html, body {
+      width: 100%; /* Ensure the body width doesn't exceed the viewport */
+      margin: 0;
+      padding: 0;
+      font: 11pt Arial, Helvetica, sans-serif;
+      background-color: #343434;
+      background-image: linear-gradient(to bottom, #211f20, #342130);
+      overflow-x: hidden; /* Prevent horizontal scroll */
+    }
+
+    /* Header */
+    #header {  
+      background: #000000;  
+      padding: 10px;  
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    #header img {
+      cursor: pointer;
+    }
+
+    .nav-links {
+     display: flex;
+     gap: 20px;
+     color: #fff;
+   }
+
+    .nav-links p {
+      margin: 0;
+      cursor: pointer;
+      color: #ffffff;
+      font-size: 14px; /* Set header text size to 24px */
+    }
+
+    .nav-links p:hover {
+      color: #fc6;
+    }
+
+    /* Main section styling */
+    #main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      position: relative;
+    }
+
+    .box {
+      background-color: #1e1e1e;
+      border: 1px solid #444;
+      border-radius: 8px;
+      padding: 30px;
+      max-width: 800px;
+      width: 100%;
+      color: #ddd;
+      text-align: left;
+      font-size: 18px;
+      margin: 10px;
+    }
+
+    .box h2 {
+      color: #a0a0a0;
+      font-size: 1.5em;
+      margin-top: 0;
+      text-align: center;
+    }
+
+    /* Reduced brightness for descriptive text */
+    .box .description {
+      color: #999; /* Lighter gray for less brightness */
+      font-size: 0.9em;
+      margin-bottom: 10px;
+    }
+
+    /* Specific styling for input boxes and sliders */
+    .box input[type="number"] {
+      width: 150px; /* Adjusted width for uniformity */
+      padding: 5px;
+      margin: 5px 10px 10px 0; /* Smaller margin to reduce spacing */
+      border-radius: 4px;
+      border: 1px solid #444444;
+      background-color: #333333;
+      color: #ffffff;
+    }
+
+    .cart {
+      cursor: pointer;
+      padding-right: 15px;
+    }
+
+    .box input[type="range"] {
+      width: 100%;
+      margin: 10px 0;
+    }
+
+    /* Tabs */
+    .box .tabs {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .box .tabs button {
+      background-color: #333333;
+      color: #ffffff;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+    }
+
+    .box .tabs button.active {
+      background-color: #fc6;
+      color: #000000;
+    }
+
+    /* Align inputs to the left of text */
+    .input-group {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .input-group p {
+      margin-right: 10px; /* Ensure the text is spaced from the input */
+      width: 120px; /* Set a fixed width for text to align properly */
+    }
+
+    .input-group input {
+      margin-left: 10px;
+    }
+
+    /* Food Preferences section */
+    .preferences-section {
+      margin: 20px 0 10px; /* Adjusted margin for consistency */
+    }
+
+    .preferences-section strong {
+      font-size: 1em;
+      color: #ffffff;
+      margin-bottom: 5px;
+      display: block;
+    }
+
+    .preferences-section .description {
+      font-size: 0.9em;
+      color: #999;
+    }
+
+    .preferences-btn {
+      display: flex;
+      justify-content: flex-start; /* Aligns the button to the left */
+      margin-top: 10px;
+    }
+
+    .preferences-btn button {
+      background-color: #444444;
+      color: #ffffff;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    .preferences-btn button:hover {
+      background-color: #fc6;
+      color: #000000;
+    }
+
+    /* Compute button */
+    .box .compute-btn {
+      background-color: #ffffff;
+      color: #000000;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      border-radius: 5px;
+      margin-top: 20px;
+    }
+
+    .box .compute-btn:hover {
+      background-color: #fc6;
+      color: #000000;
+    }
+
+    /* Footer styling */
+    #footer {
+      text-align: center;
+      padding: 10px;
+      background-color: #000000;
+      color: #686868;
+    }
+
+    /* Media queries for responsive layout adjustments */
+    @media (max-width: 768px) {
+      .box {
+        max-width: 90%;
+        padding: 20px;
+        font-size: 16px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .box {
+        font-size: 14px;
+      }
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .modal-content {
+      background: #1e1e1e;
+      border: 1px solid #444;
+      border-radius: 8px;
+      padding: 20px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 600px;
+      height: 80%;
+      overflow-y: auto;
+    }
+    
+    h1, h2 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    
+    .section {
+      margin-bottom: 20px;
+    }
+    
+    .food-group, .recipes, .custom-fields, .tags {
+      margin-bottom: 10px;
+    }
+    
+    input[type="number"], input[type="text"], input[type="url"] {
+      background: #333;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 5px;
+      margin-left: 10px;
+    }
+    
+    .tags .tag {
+      display: inline-block;
+      background: #007bff;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 5px;
+      margin: 5px;
+    }
+    
+    button.submit {
+      background-color: #28a745;
+      color: white;
+    }
+    
+    button.close {
+      background-color: #dc3545;
+      color: white;
+      margin-top: 10px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      cursor: pointer;
+    }
+    
+    .privacy label {
+      margin-right: 10px;
+    }
+    
+    .toggle {
+      color: #aaa;
+      cursor: pointer;
+    }

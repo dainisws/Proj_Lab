@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"  
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"> 
+<head> 
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styleDoc.css') }}">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/logoo.ico') }}">
+  <title>ToiT</title> 
+  <style type="text/css"> 
+   /* General body styling */
+   
+  </style> 
+</head> 
+<body> 
+  <!-- Header with logo, navigation, and cart icon -->
+  {% include "header.html" %}
+
+  <!-- Main content area with logo and descriptions -->
+  <div id="main"> 
+    <!-- Content Boxes -->
+    <div class="content-boxes">
+      <!-- Box 1 -->
+      <div class="box">
+        <p class='centered-text'><h2>Documentation</h2></p>
+        <p>adasdadadadsadasdsadadaasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaad<br>aaaaaaaaaaaaaaaaaaaaa<br> asdasdadadadadadadaddddd</p>
+        <br><br><br><br><br><br><br><br><br><br> <br><br><br><br>
+      </div>
+    </div>
+  </div> 
+
+  <!-- Footer with copyright info -->
+  <div class="footer">&copy; MenuGen<br>Version 1.0</div>
+</body> 
+</html>

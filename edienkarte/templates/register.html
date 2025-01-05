@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"  
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"> 
+<head> 
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styleRegister.css') }}">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/logoo.ico') }}">
+  <title>ToiT</title> 
+  <style type="text/css"> 
+    
+  </style> 
+</head> 
+<body> 
+  <!-- Header -->
+  {% include "header.html" %}
+
+  <!-- Main Content -->
+  <div class="content">
+    <!-- Main Authentication Box -->
+    <div class="auth-container">
+      <div class="auth-box">
+        <div class="tab-buttons">
+          <button id="login-tab" class="active" onclick="showForm('login')">Log In</button>
+          <button id="signup-tab" onclick="showForm('signup')">Sign Up</button>
+        </div>
+        <!-- Login Form -->
+        <div id="login-form" class="form-container active">
+          <h2>Log In</h2> <br>
+          <input type="text" placeholder="E-Mail/Username" id="loginUsername" />
+          <input type="password" placeholder="Password" id="loginPassword" />
+          <label><input type="checkbox" /> Remember me</label>
+          <button onclick="login()">Log In</button>
+        </div>
+        <!-- Signup Form -->
+        <div id="signup-form" class="form-container">
+          <h2>Sign Up</h2> <br>
+          <input type="text" placeholder="Username" id="registerUsername" />
+          <input type="email" placeholder="E-Mail" id="registerEmail" />
+          <input type="password" placeholder="Password" id="registerPassword" />
+          <input type="password" placeholder="Repeat Password" />
+          <label><input type="checkbox" /> I agree to the <a href="#">Terms of Service</a></label> <br>
+          <label><input type="checkbox" /> I agree to the <a href="#">Privacy Policy</a></label>
+          <button onclick="register()">Sign Up</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div id="footer">&copy; MenuGen<br>Version 1.0</div>
+
+  <!-- JavaScript to handle tab switching -->
+  <script type="text/javascript">
+    function showForm(formType) {
+      const loginForm = document.getElementById('login-form');
+      const signupForm = document.getElementById('signup-form');
+      const loginTab = document.getElementById('login-tab');
+      const signupTab = document.getElementById('signup-tab');
+      
+      if (formType === 'login') {
+        loginForm.classList.add('active');
+        signupForm.classList.remove('active');
+        loginTab.classList.add('active');
+        signupTab.classList.remove('active');
+      } else {
+        signupForm.classList.add('active');
+        loginForm.classList.remove('active');
+        signupTab.classList.add('active');
+        loginTab.classList.remove('active');
+      }
+    }
+  </script>
+  <script src="server.js"></script>
+
+</body> 
+</html>

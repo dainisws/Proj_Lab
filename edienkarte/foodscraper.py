@@ -8,7 +8,10 @@ from selenium import webdriver
 import yaml # pip install pyyaml
 import re
 import traceback
+import os
 
+script_dir = os.path.dirname(os.path.abspath(__file__))
+os.chdir(script_dir)
 with open("config.yml", "r") as file:
     config = yaml.safe_load(file)
 

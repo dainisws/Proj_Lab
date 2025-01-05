@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styleMenugen.css') }}">
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/logoo.ico') }}">
+  <title>ToiT</title>
+  <style>
+    /* General styling */
+    
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  {% include "header.html" %}
+
+  <!-- Main Section -->
+  <div id="main">
+    <div class="box">
+      <h2>Menu Generator</h2>
+
+      <!-- Tabs -->
+      <div class="tabs">
+        <button id="barbora" value="barbora" onclick="buttonClicked(this)">Barbora</button>  
+        <button id="rimi" value="rimi" onclick="buttonClicked(this)">Rimi</button>  
+      </div>
+
+      <!-- Maximum Cooking Time -->
+      <div>
+        <p><strong>Maximum Cooking Time</strong></p>
+        <p class="description">The maximum amount of time you are willing to allocate to cooking</p>
+        <input type="number" placeholder="Hours">
+      </div>
+
+      <!-- Nutrition -->
+      <div>
+        <p><strong>Nutrition</strong></p>
+        <p class="description">Specify your dietary limits for calories, fat, protein, and carbohydrates</p>
+        
+        <!-- Calories Input -->
+        <div class="input-group">
+          <p>Calories</p>
+          <input type="number" placeholder="Min">
+          <input type="number" placeholder="Max">
+        </div>
+
+        <!-- Fat Input -->
+        <div class="input-group">
+          <p>Fat</p>
+          <input type="number" placeholder="Min">
+          <input type="number" placeholder="Max">
+        </div>
+
+        <!-- Protein Input -->
+        <div class="input-group">
+          <p>Protein</p>
+          <input type="number" placeholder="Min">
+          <input type="number" placeholder="Max">
+        </div>
+
+        <!-- Carbohydrates Input -->
+        <div class="input-group">
+          <p>Carbohydrates</p>
+          <input type="number" placeholder="Min">
+          <input type="number" placeholder="Max">
+        </div>
+      </div>
+
+      <!-- Food Preferences -->
+      <div class="preferences-section">
+        <p><strong>Food Preferences</strong></p>
+        <p class="description">Rate food groups or individual foods on a scale of 1 to 10</p>
+        <div class="preferences-btn">
+          <button id="openModal">Preferences</button>
+
+          <div id="modal" class="modal">
+            <div class="modal-content">
+              <!-- <button class="close" id="closeModal">&times;</button> -->
+              <h1>Food Preferences</h1>
+              <p>Give foods a rating on a scale of 1 to 10, you can rate food groups or individual foods.</p>
+        
+              <div class="section">
+                <h2>Foods</h2>
+                <div class="food-group">
+                  <label>Dairy <span class="toggle">+</span></label>
+                  <input type="number" min="1" max="10">
+                </div>
+                <div class="food-group">
+                  <label>Fruits <span class="toggle">-</span></label>
+                  <input type="number" min="1" max="10">
+                  <div class="sub-group">
+                    <div>
+                      <label>Apples</label>
+                      <input type="number" min="1" max="10">
+                    </div>
+                    <div>
+                      <label>Bananas</label>
+                      <input type="number" min="1" max="10">
+                    </div>
+                    <div>
+                      <label>Strawberries</label>
+                      <input type="number"  min="1" max="10">
+                    </div>
+                  </div>
+                </div>
+              </div>
+        
+              <div class="section">
+                <h2>Recipes</h2>
+                <div class="recipes">
+                  <input type="text" placeholder="Recipe Sample Text">
+                  <input type="number" min="1" max="10">
+                </div>
+                <input type="text" placeholder="Search">
+              </div>
+        
+              <div class="section">
+                <h2>Add Custom</h2>
+                <div class="custom-fields">
+                  <input type="text" placeholder="Fat">
+                  <input type="text" placeholder="Protein">
+                  <input type="text" placeholder="Carbohydrates">
+                  <input type="text" placeholder="Name">
+                  <input type="url" placeholder="Link">
+                  <div class="privacy">
+                    <label><input type="radio" name="privacy" value="private" checked> Private</label>
+                    <label><input type="radio" name="privacy" value="public"> Public</label>
+                  </div>
+                </div>
+                <button class="submit">Submit</button>
+              </div>
+        
+              <div class="section">
+                <h2>Allergies</h2>
+                <div class="tags">
+                  <span class="tag">Lactose</span>
+                  <span class="tag">Gluten</span>
+                  <span class="tag">Soy</span>
+                  <span class="tag">Meat</span>
+                  <span class="tag">Fish</span>
+                </div>
+                <button class="close" id="closeModal">Close</button> 
+              </div>
+        
+             
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Price to Taste Balance -->
+      <div>
+        <p><strong>Price To Taste Balance</strong></p>
+        <input type="range" min="0" max="100" step="1">
+      </div>
+
+      <!-- Compute Button -->
+      <button class="compute-btn">Compute</button>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div id="footer">
+    &copy; MenuGen<br>
+    Version: 1.0
+  </div>
+  <script src="{{ url_for('static', filename='js/Menugen.js') }}"></script>
+</body>
+</html>

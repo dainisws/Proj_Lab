@@ -18,7 +18,7 @@ def home():
 
 @app.route('/generator')
 def generator():
-    return 'Generator Settings'
+    return render_template('MenuGen.html')
 
 @app.route('/results', methods=['POST'])
 def results():
@@ -28,11 +28,11 @@ def results():
 
 @app.route('/documentation')
 def documentation():
-    return 'Documentation'
+    return render_template('doc.html')
 
 @app.route('/legal')
 def legal():
-    return 'Legal'
+    return render_template('legal.html')
 
 @app.route('/cart')
 def cart():
@@ -44,7 +44,7 @@ def profile():
 
 @app.route('/signup')
 def signup():
-    return 'Sign Up'
+    return render_template('register.html')
 
 @app.route('/debug') # Remove this later
 def debug():

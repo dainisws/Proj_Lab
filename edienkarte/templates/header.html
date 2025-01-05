@@ -1,0 +1,13 @@
+<div id="header">
+    <img src="{{ url_for('static', filename='images/logoo.png') }}" alt="logoo" width="72" height="81" class="moved-image">
+    <div class="nav-links">
+      <p onclick="window.location.href='/';">Home</p>
+      <p onclick="window.location.href='/generator';">Menu Generator</p>
+      <p onclick="window.location.href='/documentation';">Documentation</p>
+      <p onclick="window.location.href='https://github.com/dainisws/Proj_Lab';">Repository</p>
+      <p onclick="window.location.href='/legal';">Legal</p>
+    </div>
+    <div class="cart">
+      <img src="{{ url_for('static', filename='images/Icon.png') }}" alt="cart" width="32" height="32" class="moved-image-cart" onclick="window.location.href='/cart';">
+    </div>
+</div>

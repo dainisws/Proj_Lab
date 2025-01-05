@@ -1,0 +1,104 @@
+html, body { 
+  overflow-x: hidden; /* Disable horizontal scrolling */
+    font: 11pt Arial, Helvetica, sans-serif;  
+    margin: 0;  
+    background-color: #343434;
+    background-image: linear-gradient(to bottom, #211f20, #342130);
+   } 
+   
+   h1 { 
+    font-size: 36px;  
+    margin: 0;  
+    color: #fc6;  
+   } 
+   .moved-image-cart {
+    cursor: pointer;
+    padding-right: 15px;
+   }
+
+   /* Header styling */
+   #header {  
+    background: #000000;  
+    padding: 10px;  
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+   } 
+
+   /* Flexbox for navigation links */
+   .nav-links {
+     display: flex;
+     gap: 20px;
+     color: #fff;
+   }
+   .nav-links p {
+     margin: 0;
+     cursor: pointer;
+     color: #fff; 
+     font-size: 14px; /* Set header text size to 24px */
+   }
+   .nav-links p:hover {
+     color: #fc6; /* Color change on hover */
+   }
+   /* Center the main content */
+   #main {
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     text-align: center;
+     padding: 40px 20px;
+     font-size: 18px;
+   }
+
+   /* Footer styling */
+   .footer {  
+    background: #000000;  
+    padding: 5px;  
+    color: #686868;  
+    text-align: center;
+    width: 100%;
+    height: 100%;
+   } 
+
+   /* Content Boxes styling */
+   .content-boxes {
+     display: flex;
+     flex-wrap: wrap;
+     justify-content: center;
+     margin-top: 20px;
+     width: 100%;
+   }
+   
+   .box {
+     background-color: #1e1e1e;
+     border: 1px solid #444;
+     border-radius: 8px;
+     padding: 30px;
+     max-width: 800px; /* Larger width */
+     width: 100%;
+     color: #ddd;
+     text-align: left;
+     font-size: 18px;
+     margin: 15px;
+   }
+   .box h2 {
+     color: #a0a0a0;
+     font-size: 1.5em;
+     margin-top: 0;
+   }
+
+   /* Media queries for responsive layout adjustments */
+   @media (max-width: 768px) {
+     h1 { font-size: 28px; }
+     #header { flex-direction: column; align-items: center; }
+     .moved-image-cart, .moved-image { width: 50px; height: auto; }
+     .nav-links { flex-direction: column; align-items: center; gap: 10px; }
+     .box { max-width: 90%; padding: 20px; font-size: 16px; }
+   }
+   
+   @media (max-width: 480px) {
+     h1 { font-size: 24px; }
+     .centered-text, .centered-text2 { font-size: 10pt; }
+     .box { font-size: 14px; }
+   }

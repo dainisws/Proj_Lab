@@ -1,5 +1,5 @@
 from flask import Flask, request
-from models import Input, Food
+from models import Input, FoodRimi, FoodBarbora
 from models import init_db
 from foodscraper import FoodScraper
 import os
@@ -48,7 +48,7 @@ def signup():
 
 @app.route('/debug') # Remove this later
 def debug():
-    return render_template("debug.html", foods=db.session.query(Food).all())
+    return render_template("debug.html", foods=db.session.query(FoodBarbora).all())
 
 if __name__ == '__main__':
     init_db()

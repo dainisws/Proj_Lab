@@ -22,9 +22,41 @@ class Input():
     price_weight = 0.5
     taste_weight = 0.5
 
-class Food(Base):
+class FoodRimi(Base):
 
-    __tablename__ = "Food"
+    __tablename__ = "FoodRimi"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    store = Column(String(20), nullable=False)
+    link = Column(Text, nullable=False, unique=True)
+    name = Column(Text, nullable=False)
+    main_category = Column(String(80), nullable=False)
+    last_category = Column(String(80), nullable=False)
+    info = Column(Text, nullable=True)
+    amount = Column(Integer, nullable=True)
+    pricePerKg = Column(Float, nullable=True)
+    calories = Column(Integer, nullable=True)
+    protein = Column(Float, nullable=True)
+    fat = Column(Float, nullable=True)
+    carbs = Column(Float, nullable=True)
+
+    def __init__(self, store, link, name, mainCategory, lastCategory, info, amount, pricePerKg, calories, protein, fat, carbs):
+        self.store = store
+        self.link = link
+        self.name = name
+        self.main_category = mainCategory
+        self.last_category = lastCategory
+        self.info = info
+        self.amount = amount
+        self.pricePerKg = pricePerKg
+        self.calories = calories
+        self.protein = protein
+        self.fat = fat
+        self.carbs = carbs
+
+class FoodBarbora(Base):
+
+    __tablename__ = "FoodBarbora"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     store = Column(String(20), nullable=False)

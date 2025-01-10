@@ -1,4 +1,4 @@
-from flask import Flask, redirect, url_for, jsonify, session, request
+from flask import Flask, redirect, url_for, jsonify, session, Response, request, send_file
 from models import Input, FoodRimi, FoodBarbora, User
 from models import init_db
 from foodscraper import FoodScraper
@@ -8,9 +8,20 @@ from flask import render_template
 from werkzeug.security import generate_password_hash, check_password_hash # pip install Werkzeug
 
 app = Flask(__name__)
-app.secret_key = "JAmNqo4kiM3Xv3cEzHv5fUWZ0INE33GD"
+
+
+script_dir = os.path.dirname(os.path.abspath(__file__))
+os.chdir(script_dir)
+with open("key.txt", "r") as file:
+    app.secret_key = file.read() # Šo būtu jānomaina, ja publicē
+
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///{}".format(os.path.join(os.path.dirname(os.path.abspath(__file__)), "data.db"))
 db = SQLAlchemy(app)
+ALLOWED_EXTENSIONS = {'jpg', 'jpeg'}
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 foodscraper = FoodScraper(db, app)
 
@@ -40,10 +51,40 @@ def legal():
 def cart():
     return 'Shopping Cart'
 
-@app.route('/profile')
+@app.route('/profile', methods=['GET', 'POST'])
 def profile():
+    if session.get('user_id', None) is None:
+        return redirect(url_for('home'))
+    if request.method == 'POST':
+        if 'image' not in request.files:
+            return "Something went wrong...", 400
+        
+        file = request.files['image']
+        
+        if file.filename == '':
+            return "Something went wrong...", 400
+        
+        if file and allowed_file(file.filename):
+            user = db.session.query(User).filter_by(email=session.get('user_id', None)).first()
+            user.profile_picture = file.read()
+            db.session.commit()
+            return redirect(url_for('profile'))
+        else:
+            return "Picture must be JPG/JPEG", 400
     return render_template('profile.html', username=session.get('user_id', None))
 
+@app.route('/profilepicture')
+def get_image():
+    default_image_path = os.path.join('static/images', 'pfp.jpg')
+    try:
+        image = db.session.query(User.profile_picture).filter_by(email=session.get('user_id', None)).first()
+        if not image:
+            return send_file(default_image_path, mimetype='image/jpeg')
+        else:    
+            return Response(image, mimetype='image/jpeg')
+    except:
+        return send_file(default_image_path, mimetype='image/jpeg')
+    
 @app.route('/signup')
 def signup():
     return render_template('register.html')
@@ -101,7 +142,19 @@ def login():
 # Route: Logout
 @app.route('/logout')
 def logout():
-    session.pop('user_id', None)  # Remove user from session
+    if session.get('user_id', None) is not None:
+        session.pop('user_id', None)
+    return redirect(url_for('home'))
+
+@app.route('/deleteprofile')
+def deleteProfile():
+    if session.get('user_id', None) is not None:
+        try:
+            db.session.delete(db.session.query(User).filter_by(email=session.get('user_id', None)).first())
+            db.session.commit() 
+            session.pop('user_id', None)
+        except Exception as e: print(e)
+ 
     return redirect(url_for('home'))
 
 @app.route('/debug') # Remove this later

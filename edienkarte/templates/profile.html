@@ -8,26 +8,60 @@
   <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/logoo.ico') }}">
   <title>ToiT</title> 
   <style type="text/css"> 
-   /* General body styling */
-   
+    .uploadArea {
+        background-image: url("/profilepicture");
+    }
   </style> 
 </head> 
 <body> 
-  <!-- Header with logo, navigation, and cart icon -->
-  {% include "header.html" %}
-
-  <!-- Main content area with logo and descriptions -->
-  <div id="main"> 
-    <div class="content-boxes">
-      <div class="box">
-        <p class='centered-text'><h2>Profile</h2></p>
-        <p>adasdadadadsadasdsadadaasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaad<br>aaaaaaaaaaaaaaaaaaaaa<br> asdasdadadadadadadaddddd</p>
-        <br><br><br><br><br><br><br><br><br><br> <br><br><br><br>
-      </div>
+    {% include "header.html" %}
+    <div id="main"> 
+        <div class="box">
+            <div class="profile-section">
+                <form method="POST" enctype="multipart/form-data" style="display: flex; flex-direction: column; align-items: center;">
+                    <div class="upload-area card-3-img" id="uploadArea">
+                        <b style="text-align: center;">+ <br>Change Picture</b>
+                        <input type="file" id="fileInput" name="image">
+                    </div>
+                    <div class="uploaded-files" id="uploadedFiles" style="color: white;"></div>
+                </form>
+                <h2 style=\"margin-bottom: 0px;\">{{username}}</h2>
+                <button type="submit" onclick="window.location.href='/deleteprofile'; return confirm('Are you sure you want to delete your account?');" class="btn-3 btn-color-red" name="delete-account" value="true">Delete Account</button>
+                <button type="submit" onclick="window.location.href='/logout';" class="btn-3 btn-color-black" name="sign-out" value="true">Log Out</button>
+            </div>
+        </div>
     </div>
-  </div> 
 
-  <!-- Footer with copyright info -->
-  <div class="footer">&copy; MenuGen<br>Version 1.0</div>
+    <div class="footer">&copy; MenuGen<br>Version 1.0</div>
+    <script>
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('fileInput');
+        const uploadedFiles = document.getElementById('uploadedFiles');
+
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('drag-over');
+        });
+
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('drag-over');
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('drag-over');
+            handleFiles(e.dataTransfer.files);
+        });
+
+        uploadArea.addEventListener('click', () => fileInput.click());
+        fileInput.addEventListener('change', () => handleFiles(fileInput.files));
+
+        function handleFiles(files) {
+            const fileList = Array.from(files)
+                .map((file) => `<p>${file.name} (${(file.size / 1024).toFixed(2)} KB)</p>`)
+                .join('');
+            uploadedFiles.innerHTML = fileList + "<button type=\"submit\" class=\"btn-3\" style=\"margin-bottom: 0px;\">Atjaunot</button>";
+        }
+    </script>
 </body> 
 </html>

@@ -12,7 +12,6 @@
   </style> 
 </head> 
 <body> 
-  <!-- Header -->
   {% include "header.html" %}
 
   <!-- Main Content -->
@@ -27,7 +26,7 @@
         <!-- Login Form -->
         <div id="login-form" class="form-container active">
           <h2>Log In</h2> <br>
-          <input type="text" placeholder="E-Mail/Username" id="loginUsername" />
+          <input type="text" placeholder="E-Mail" id="loginEmail" />
           <input type="password" placeholder="Password" id="loginPassword" />
           <label><input type="checkbox" /> Remember me</label>
           <button onclick="login()">Log In</button>
@@ -39,8 +38,8 @@
           <input type="email" placeholder="E-Mail" id="registerEmail" />
           <input type="password" placeholder="Password" id="registerPassword" />
           <input type="password" placeholder="Repeat Password" />
-          <label><input type="checkbox" /> I agree to the <a href="#">Terms of Service</a></label> <br>
-          <label><input type="checkbox" /> I agree to the <a href="#">Privacy Policy</a></label>
+          <label><input type="checkbox" id="checkBox1" /> I agree to the <a href="#">Terms of Service</a></label> <br>
+          <label><input type="checkbox" id="checkBox2" /> I agree to the <a href="#">Privacy Policy</a></label>
           <button onclick="register()">Sign Up</button>
         </div>
       </div>
@@ -71,7 +70,7 @@
       }
     }
   </script>
-  <script src="server.js"></script>
+  <script src="{{ url_for('static', filename='js/server.js') }}"></script>
 
 </body> 
 </html>

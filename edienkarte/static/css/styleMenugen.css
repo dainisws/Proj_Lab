@@ -18,6 +18,11 @@ html, body {
       flex-wrap: wrap;
     }
 
+    #header-left {
+      display: flex;
+      align-items: center;
+    }
+
     #header img {
       cursor: pointer;
     }
@@ -28,8 +33,15 @@ html, body {
      color: #fff;
    }
 
+   .moved-image {
+    margin-right: 20px;
+   }
+   .moved-image-cart {
+    cursor: pointer;
+    padding-right: 15px;
+   }
+
     .nav-links p {
-      margin: 0;
       cursor: pointer;
       color: #ffffff;
       font-size: 14px; /* Set header text size to 24px */
@@ -196,7 +208,18 @@ html, body {
     }
 
     /* Media queries for responsive layout adjustments */
-    @media (max-width: 768px) {
+    @media (max-width: 1000px) {
+      h1 { font-size: 28px; }
+      #header { flex-direction: column; align-items: center; }
+      #header-left .moved-image {
+        margin-right: 0px;
+       }
+      .moved-image-cart, .moved-image { width: 50px; height: auto; }
+      .nav-links { flex-direction: column; align-items: center; gap: 10px; }
+      #header-left {
+        flex-direction: column;
+       }
+
       .box {
         max-width: 90%;
         padding: 20px;

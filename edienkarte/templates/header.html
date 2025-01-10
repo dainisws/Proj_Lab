@@ -1,13 +1,27 @@
 <div id="header">
-    <img src="{{ url_for('static', filename='images/logoo.png') }}" alt="logoo" width="72" height="81" class="moved-image">
-    <div class="nav-links">
-      <p onclick="window.location.href='/';">Home</p>
-      <p onclick="window.location.href='/generator';">Menu Generator</p>
-      <p onclick="window.location.href='/documentation';">Documentation</p>
-      <p onclick="window.location.href='https://github.com/dainisws/Proj_Lab';">Repository</p>
-      <p onclick="window.location.href='/legal';">Legal</p>
+    <div id="header-left">
+      <img src="{{ url_for('static', filename='images/logoo.png') }}" alt="logoo" width="72" height="81" class="moved-image">
+      <div class="nav-links">
+        <p onclick="window.location.href='/';">Home</p>
+        <p onclick="window.location.href='/generator';">Menu Generator</p>
+        <p onclick="window.location.href='/documentation';">Documentation</p>
+        <p onclick="window.location.href='https://github.com/dainisws/Proj_Lab';">Repository</p>
+        <p onclick="window.location.href='/legal';">Legal</p>
+      </div>
     </div>
-    <div class="cart">
+    <div class="cart" style="display: flex; align-items: center; color: #ddd;">
       <img src="{{ url_for('static', filename='images/Icon.png') }}" alt="cart" width="32" height="32" class="moved-image-cart" onclick="window.location.href='/cart';">
+      <p style="margin: auto 2rem auto 2rem; cursor: text;">
+        {% if username %}
+            {{ username }}
+        {% else %}
+            Guest
+        {% endif %}
+      </p>
+      {% if username %}
+      <a href="/profile"><img src="$pfp" style="border-radius: 50%; width: 60px; height: 60px; background-color: #888; object-fit: cover; display: inline-block; margin-right: 1rem;"></a>
+      {% else %}
+      <a href="/signup"><img src="$pfp" style="border-radius: 50%; width: 60px; height: 60px; background-color: #888; object-fit: cover; display: inline-block; margin-right: 1rem;"></a>
+      {% endif %}
     </div>
 </div>

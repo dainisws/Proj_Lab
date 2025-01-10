@@ -1,202 +1,208 @@
 /* General styling for body and template */
 html, body { 
-    height: 100%; /* Ensures full height for flexbox */
-    margin: 0;  
-    font: 11pt Arial, Helvetica, sans-serif;  
-    background-color: #343434;
-    background-image: linear-gradient(to bottom, #211f20, #342130);
-    display: flex;
-    flex-direction: column; /* Flexbox for sticky footer */
-    overflow-x: hidden; /* Prevent horizontal scroll */
+  height: 100%; /* Ensures full height for flexbox */
+  margin: 0;  
+  font: 11pt Arial, Helvetica, sans-serif;  
+  background-color: #343434;
+  background-image: linear-gradient(to bottom, #211f20, #342130);
+  display: flex;
+  flex-direction: column; /* Flexbox for sticky footer */
+  overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
+h1 { 
+  font-size: 36px;  
+  margin: 0;  
+  color: #fc6;  
+  cursor: pointer;
+} 
+
+/* Main wrapper for content */
+.content {
+  flex: 1; /* Makes content grow to fill available space */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header styling */
+#header {  
+  background: #000000;  
+  padding: 10px;  
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  /* width: 100%; */
+} 
+#header-left {
+  display: flex;
+  align-items: center;
+ }
+ .moved-image {
+  margin-right: 20px;
+ }
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+  color: #fff;
+  flex-wrap: wrap; /* Allows wrapping for smaller screens */
+}
+
+.nav-links p {
+  cursor: pointer;
+  color: #fff; 
+  font-size: 14px; /* Set header text size to 24px */
+}
+
+.nav-links p:hover {
+  color: #fc6;
+}
+
+/* Footer styling */
+#footer {  
+  background: #000000;  
+  padding: 10px;  
+  color: #686868;  
+  text-align: center;
+  width: 100%;
+}
+
+/* Login and signup box */
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1; /* Ensures it expands to take available space */
+  padding: 20px;
+}
+
+.auth-box {
+  background-color: #1e1e1e;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5);
+  width: 400px; /* Adjusted width for a wider box */
+  max-width: 100%;
+}
+
+.auth-box h2 {
+  margin: 0;
+  color: #fff;
+  font-size: 24px;
+}
+
+.tab-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.tab-buttons button {
+  flex: 1;
+  padding: 10px;
+  background-color: transparent;
+  color: #fff;
+  border: none;
+  border-bottom: 2px solid transparent;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.tab-buttons button.active {
+  border-bottom: 2px solid #fc6;
+}
+
+.form-container {
+  display: none;
+}
+
+.form-container.active {
+  display: block;
+}
+
+.form-container input {
+  width: calc(100% - 20px);
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #444;
+  border-radius: 4px;
+  background-color: #2c2c2c;
+  color: #fff;
+  font-size: 14px;
+}
+
+.form-container input[type="checkbox"] {
+  width: auto;
+  margin-right: 10px;
+}
+
+.form-container label {
+  color: #fff;
+  font-size: 12px;
+}
+
+.form-container button {
+  width: 100%;
+  padding: 10px;
+  background-color: #fc6;
+  color: #000;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.form-container button:hover {
+  background-color: #e5b800;
+}
+
+.form-container a {
+  color: #fc6;
+  text-decoration: none;
+  font-size: 12px;
+}
+
+.cart {
+  cursor: pointer;
+  padding-right: 15px;
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 1000px) {
+  #header { flex-direction: column; align-items: center; }
+  #header-left .moved-image {
+   margin-right: 0px;
   }
-
-  h1 { 
-    font-size: 36px;  
-    margin: 0;  
-    color: #fc6;  
-    cursor: pointer;
-  } 
-
-  /* Main wrapper for content */
-  .content {
-    flex: 1; /* Makes content grow to fill available space */
-    display: flex;
-    flex-direction: column;
-  }
-
-  /* Header styling */
-  #header {  
-    background: #000000;  
-    padding: 10px;  
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    /* width: 100%; */
-  } 
-
-  .nav-links {
-    display: flex;
-    gap: 20px;
-    color: #fff;
-    flex-wrap: wrap; /* Allows wrapping for smaller screens */
-  }
-
-  .nav-links p {
-    margin: 0;
-    cursor: pointer;
-    color: #fff; 
-    font-size: 14px; /* Set header text size to 24px */
-  }
-
-  .nav-links p:hover {
-    color: #fc6;
-  }
-
-  /* Footer styling */
-  #footer {  
-    background: #000000;  
-    padding: 10px;  
-    color: #686868;  
-    text-align: center;
-    width: 100%;
-  }
-
-  /* Login and signup box */
-  .auth-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-grow: 1; /* Ensures it expands to take available space */
-    padding: 20px;
+  .moved-image-cart, .moved-image { width: 50px; height: auto; }
+  .nav-links { flex-direction: column; align-items: center; gap: 10px; align-items: center;}
+  #header-left {
+   flex-direction: column;
   }
 
   .auth-box {
-    background-color: #1e1e1e;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5);
-    width: 400px; /* Adjusted width for a wider box */
-    max-width: 100%;
+    width: 90%; /* Adjust the width of the form for smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 24px; /* Make the header text smaller */
   }
 
-  .auth-box h2 {
-    margin: 0;
-    color: #fff;
-    font-size: 24px;
-  }
-
-  .tab-buttons {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
+  .auth-box {
+    padding: 15px; /* Adjust padding for smaller devices */
   }
 
   .tab-buttons button {
-    flex: 1;
-    padding: 10px;
-    background-color: transparent;
-    color: #fff;
-    border: none;
-    border-bottom: 2px solid transparent;
-    font-size: 16px;
-    cursor: pointer;
-  }
-
-  .tab-buttons button.active {
-    border-bottom: 2px solid #fc6;
-  }
-
-  .form-container {
-    display: none;
-  }
-
-  .form-container.active {
-    display: block;
+    font-size: 14px; /* Reduce button font size */
   }
 
   .form-container input {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #444;
-    border-radius: 4px;
-    background-color: #2c2c2c;
-    color: #fff;
-    font-size: 14px;
-  }
-
-  .form-container input[type="checkbox"] {
-    width: auto;
-    margin-right: 10px;
-  }
-
-  .form-container label {
-    color: #fff;
-    font-size: 12px;
+    font-size: 12px; /* Adjust input font size */
   }
 
   .form-container button {
-    width: 100%;
-    padding: 10px;
-    background-color: #fc6;
-    color: #000;
-    border: none;
-    border-radius: 4px;
-    font-size: 16px;
-    cursor: pointer;
+    font-size: 14px; /* Adjust button font size */
   }
-
-  .form-container button:hover {
-    background-color: #e5b800;
-  }
-
-  .form-container a {
-    color: #fc6;
-    text-decoration: none;
-    font-size: 12px;
-  }
-
-  .cart {
-    cursor: pointer;
-    padding-right: 15px;
-  }
-
-  /* Media queries for responsiveness */
-  @media (max-width: 768px) {
-    #header {
-      flex-direction: column; /* Stack the header content */
-      align-items: flex-start;
-    }
-
-    .nav-links {
-      flex-direction: column; /* Stack navigation links */
-      gap: 10px;
-    }
-
-    .auth-box {
-      width: 90%; /* Adjust the width of the form for smaller screens */
-    }
-  }
-
-  @media (max-width: 480px) {
-    h1 {
-      font-size: 24px; /* Make the header text smaller */
-    }
-
-    .auth-box {
-      padding: 15px; /* Adjust padding for smaller devices */
-    }
-
-    .tab-buttons button {
-      font-size: 14px; /* Reduce button font size */
-    }
-
-    .form-container input {
-      font-size: 12px; /* Adjust input font size */
-    }
-
-    .form-container button {
-      font-size: 14px; /* Adjust button font size */
-    }
-  }
+}

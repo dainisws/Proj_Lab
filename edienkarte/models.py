@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Integer, Text, Float, create_engine
+from sqlalchemy import Column, String, Integer, Text, Float, LargeBinary, create_engine
 import os
 from sqlalchemy.orm import declarative_base
 
@@ -108,3 +108,47 @@ class RecipesIngredients(Base):
     recipe_id = Column(Integer, nullable=False)
     name = Column(Text, nullable=False)
     proportion = Column(Integer, nullable=True)
+
+class User(Base):
+
+    __tablename__ = "Users"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    username = Column(String(16), nullable=False, unique=True)
+    email = Column(Text, nullable=False, unique=True)
+    password = Column(Text, nullable=False)
+    profile_picture =  Column(LargeBinary, nullable=True)
+
+    def __init__(self, username, email, password, profile_picture):
+        self.username = username
+        self.email = email
+        self.password = password
+        self.profile_picture = profile_picture
+
+class FoodRating(Base):
+
+    __tablename__ = "FoodRatings"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    user_id = Column(Integer, nullable=False)
+    food_id = Column(Integer, nullable=False)
+    rating = Column(Integer, nullable=False)
+
+    def __init__(self, user_id, food_id, rating):
+        self.user_id = user_id
+        self.food_id = food_id
+        self.name = rating
+
+class RecipeRating(Base):
+
+    __tablename__ = "RecipeRatings"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    user_id = Column(Integer, nullable=False)
+    recipe_id = Column(Integer, nullable=False)
+    rating = Column(Integer, nullable=False)
+
+    def __init__(self, user_id, recipe_id, rating):
+        self.user_id = user_id
+        self.recipe_id = recipe_id
+        self.name = rating

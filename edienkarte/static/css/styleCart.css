@@ -4,6 +4,11 @@ html, body {
       margin: 0;  
       background-color: #343434;
       background-image: linear-gradient(to bottom, #211f20, #342130);
+      height: 100%; /* Ensure the height of the page is 100% of the viewport */
+      display: flex;
+      flex-direction: column; /* Make the body a flex container */
+      margin: 0; /* Remove default margin */
+  
      } 
      
      h1 { 
@@ -11,9 +16,6 @@ html, body {
       margin: 0;  
       color: #fc6;  
      } 
-     .moved-image {
-      margin-right: 20px;
-     }
      .moved-image-cart {
       cursor: pointer;
       padding-right: 15px;
@@ -28,11 +30,11 @@ html, body {
       justify-content: space-between;
       flex-wrap: wrap;
      } 
-     
-     #header-left {
-      display: flex;
-      align-items: center;
-     }
+
+    #header-left {
+        display: flex;
+        align-items: center;
+    }
   
      /* Flexbox for navigation links */
      .nav-links {
@@ -41,6 +43,7 @@ html, body {
        color: #fff;
      }
      .nav-links p {
+       margin: 0;
        cursor: pointer;
        color: #fff; 
        font-size: 14px; /* Set header text size to 24px */
@@ -56,16 +59,18 @@ html, body {
        text-align: center;
        padding: 40px 20px;
        font-size: 18px;
+       flex: 1;
      }
   
      /* Footer styling */
      .footer {  
       background: #000000;  
-      padding: 5px;  
+      padding: 10px;  
       color: #686868;  
       text-align: center;
       width: 100%;
-      height: 100%;
+      margin-top: auto;
+      
      } 
   
      /* Content Boxes styling */
@@ -82,12 +87,15 @@ html, body {
        border: 1px solid #444;
        border-radius: 8px;
        padding: 30px;
-       max-width: 800px; /* Larger width */
+       max-width: 2000px; /* Larger width */
        width: 100%;
        color: #ddd;
        text-align: left;
        font-size: 18px;
        margin: 15px;
+       display: flex;
+       flex-direction: column;
+       align-items: center;
      }
      .box h2 {
        color: #a0a0a0;
@@ -95,16 +103,74 @@ html, body {
        margin-top: 0;
      }
   
+  
+         /* Styling for the small box */
+         .small-box {
+          display: flex;
+          align-items: center;
+          gap: 15px;
+          background-color: #252525;
+          border-radius: 8px;
+          width: 500px;
+          padding: 15px;
+          margin-top: 10px;
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+  
+        .food-image {
+          width: 150px; /* Fixed width */
+          height: 300px; /* Fixed height */
+          border-radius: 8px; /* Rounded corners */
+          object-fit: cover; /* Ensures the image fills the area without distortion */
+          background-color: #444; /* Placeholder background color in case of missing images */
+        }
+  
+        .food-details {
+          color: #ddd;
+          font-size: 14px;
+        }
+  
+        .delete-button {
+          margin-top: 15px;
+          background-color: #fc6;
+          color: #000;
+          border: none;
+          border-radius: 4px;
+          padding: 10px 20px;
+          cursor: pointer;
+          font-size: 14px;
+        }
+    
+        .delete-button:hover {
+          background-color: #ff9800;
+        }
+  
+        .buy-button {
+          margin-top: 15px;
+          background-color: rgb(102, 255, 115);
+          color: #000;
+          border: none;
+          border-radius: 4px;
+          padding: 10px 20px;
+          cursor: pointer;
+          font-size: 14px;
+        }
+    
+        .buy-button:hover {
+          background-color: #00ff00;
+        }
+        
+  
      /* Media queries for responsive layout adjustments */
-     @media (max-width: 1000px) {
+     @media (max-width: 768px) {
        h1 { font-size: 28px; }
        #header { flex-direction: column; align-items: center; }
-       #header-left .moved-image {
-        margin-right: 0px;
-       }
        .moved-image-cart, .moved-image { width: 50px; height: auto; }
        .nav-links { flex-direction: column; align-items: center; gap: 10px; }
        .box { max-width: 90%; padding: 20px; font-size: 16px; }
+       #header-left .moved-image {
+        margin-right: 0px;
+       }
        #header-left {
         flex-direction: column;
        }
@@ -116,3 +182,26 @@ html, body {
        .box { font-size: 14px; }
      }
   
+     a:link {
+        transition: 0.3s;
+        color: rgb(231, 198, 105);
+        text-decoration: none;
+    }
+    
+    a:visited {
+        transition: 0.3s;
+        color: rgb(231, 198, 105);
+        text-decoration: none;
+    }
+
+    a:hover {
+        transition: 0.3s;
+        color: rgb(228, 205, 143);
+        text-decoration: none;
+    }
+
+    a:active {
+        transition: 0.3s;
+        color: rgb(231, 198, 105);
+        text-decoration: none;
+    }

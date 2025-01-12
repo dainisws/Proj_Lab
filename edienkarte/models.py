@@ -86,29 +86,6 @@ class FoodBarbora(Base):
         self.fat = fat
         self.carbs = carbs
 
-class Recipe(Base):
-
-    __tablename__ = "Recipe"
-
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    link = Column(Text, nullable=False, unique=True)
-    info = Column(Text, nullable=False)
-    name = Column(Text, nullable=False)
-    time_s = Column(Integer, nullable=True)
-    calories = Column(Integer, nullable=True)
-    protein = Column(Float, nullable=True)
-    fat = Column(Float, nullable=True)
-    carbs = Column(Float, nullable=True)
-
-class RecipesIngredients(Base):
-
-    __tablename__ = "RecipesIngredients"
-
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    recipe_id = Column(Integer, nullable=False)
-    name = Column(Text, nullable=False)
-    proportion = Column(Integer, nullable=True)
-
 class User(Base):
 
     __tablename__ = "Users"
@@ -125,30 +102,30 @@ class User(Base):
         self.password = password
         self.profile_picture = profile_picture
 
-class FoodRating(Base):
+class FoodRatingRimi(Base):
 
-    __tablename__ = "FoodRatings"
+    __tablename__ = "FoodRatingsRimi"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     user_id = Column(Integer, nullable=False)
     food_id = Column(Integer, nullable=False)
-    rating = Column(Integer, nullable=False)
+    rating = Column(Float, nullable=False)
 
     def __init__(self, user_id, food_id, rating):
         self.user_id = user_id
         self.food_id = food_id
-        self.name = rating
+        self.rating = rating
 
-class RecipeRating(Base):
+class FoodRatingBarbora(Base):
 
-    __tablename__ = "RecipeRatings"
+    __tablename__ = "FoodRatingsBarbora"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     user_id = Column(Integer, nullable=False)
-    recipe_id = Column(Integer, nullable=False)
-    rating = Column(Integer, nullable=False)
+    food_id = Column(Integer, nullable=False)
+    rating = Column(Float, nullable=False)
 
-    def __init__(self, user_id, recipe_id, rating):
+    def __init__(self, user_id, food_id, rating):
         self.user_id = user_id
-        self.recipe_id = recipe_id
-        self.name = rating
+        self.food_id = food_id
+        self.rating = rating

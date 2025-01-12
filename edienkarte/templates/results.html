@@ -11,6 +11,18 @@
    /* General body styling */
    
   </style> 
+  <script>
+    let items = {{ resultsOptimal | tojson }}; // All optimal foods
+    let items2 = {{ results | tojson }}; // All foods
+    items = items.map((item, index) => ({
+        ...item,
+        id: index + 1
+    }));
+    items2 = items2.map((item, index) => ({
+        ...item,
+        id: index + 1
+    }));
+  </script>
 </head> 
 <body> 
   <!-- Header with logo, navigation, and cart icon -->
@@ -22,14 +34,24 @@
     <div class="content-boxes">
       <!-- Box 1 -->
       <div class="box">
-        <p class='centered-text'><h2>Results</h2></p>
-        <p>adasdadadadsadasdsadadaasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaad<br>aaaaaaaaaaaaaaaaaaaaa<br> asdasdadadadadadadaddddd</p>
-        <br><br><br><br><br><br><br><br><br><br> <br><br><br><br>
+        <div class="section">
+            <h1>Results</h1>
+            <p style="margin-bottom: 40px;">Choose how much of each food you want (in grams) and optimal results will be recalculated.</p>
+            <h2>Optimal Results</h2>
+            <input type="text" id="searchInput1" placeholder="Search items..." oninput="filterItems1()"/>
+            <div class="food-section" id="food-section-1">
+            </div>
+            <h2>Add Other</h2>
+            <input type="text" id="searchInput2" placeholder="Search items..." oninput="filterItems2()"/>
+            <div class="food-section" id="food-section-2">
+            </div>
+          </div>
       </div>
     </div>
   </div> 
 
   <!-- Footer with copyright info -->
   <div class="footer">&copy; MenuGen<br>Version 1.0</div>
+  <script src="{{ url_for('static', filename='js/results.js') }}"></script>
 </body> 
 </html>

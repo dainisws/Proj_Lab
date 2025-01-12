@@ -1,11 +1,13 @@
 from flask import Flask, redirect, url_for, jsonify, session, Response, request, send_file
-from models import Input, FoodRimi, FoodBarbora, User
+from models import Input, FoodRimi, FoodBarbora, FoodRatingBarbora, FoodRatingRimi, User
 from models import init_db
 from foodscraper import FoodScraper
 import os
 from flask_sqlalchemy import SQLAlchemy
 from flask import render_template
 from werkzeug.security import generate_password_hash, check_password_hash # pip install Werkzeug
+from solver import SolverModel
+from sqlalchemy import case
 
 app = Flask(__name__)
 
@@ -31,13 +33,45 @@ def home():
 
 @app.route('/generator')
 def generator():
-    return render_template('MenuGen.html', username=session.get('user_id', None))
-
-@app.route('/results', methods=['POST'])
-def results():
-    min_carbs = float(request.args.get('min_carbs')) # example
-    input = Input() # should put arguments here
-    return 'Generator Results'
+    if session.get('user_id', None) is None:
+        return redirect(url_for('signup'))
+    else:
+        return render_template('MenuGen.html', username=session.get('user_id', None))
+    
+@app.route('/getbarborafoods', methods=['GET'])
+def getbarborafoods():
+    items = db.session.query(FoodBarbora.id, FoodBarbora.name).all()
+    items_list = [{"id": item.id, "name": item.name} for item in items]
+    return jsonify(items_list)
+@app.route('/getrimifoods', methods=['GET'])
+def getrimifoods():
+    items = db.session.query(FoodRimi.id, FoodRimi.name).all()
+    items_list = [{"id": item.id, "name": item.name} for item in items]
+    return jsonify(items_list)
+@app.route('/getbarboragroups', methods=['GET'])
+def getbarboragroups():
+    items = db.session.query(FoodBarbora.last_category).distinct().all()
+    items_list = [{"name": item.last_category} for item in items]
+    return jsonify(items_list)
+@app.route('/getrimigroups', methods=['GET'])
+def getrimigroups():
+    items = db.session.query(FoodRimi.last_category).distinct().all()
+    items_list = [{"name": item.last_category} for item in items]
+    return jsonify(items_list)
+@app.route('/getbarboraratings', methods=['GET'])
+def getbarboraratings():
+    if session.get('user_id', None) is None:
+        return "No session found", 400
+    items = db.session.query(FoodRatingBarbora.food_id, FoodRatingBarbora.rating).join(User, User.id == FoodRatingBarbora.user_id).filter(User.email == session.get('user_id', None)).all()
+    items_list = [{"id": item.food_id, "rating": item.rating} for item in items]
+    return jsonify(items_list)
+@app.route('/getrimiratings', methods=['GET'])
+def getrimiratings():
+    if session.get('user_id', None) is None:
+        return "No session found", 400
+    items = db.session.query(FoodRatingRimi.food_id, FoodRatingRimi.rating).join(User, User.id == FoodRatingRimi.user_id).filter(User.email == session.get('user_id', None)).all()
+    items_list = [{"id": item.food_id, "rating": item.rating} for item in items]
+    return jsonify(items_list)
 
 @app.route('/documentation')
 def documentation():
@@ -47,9 +81,17 @@ def documentation():
 def legal():
     return render_template('legal.html', username=session.get('user_id', None))
 
-@app.route('/cart')
+@app.route('/cart', methods=['GET', 'POST'])
 def cart():
-    return 'Shopping Cart'
+    if session.get('user_id', None) == None:
+        redirect(url_for('home'))
+    if request.method == 'POST':
+        if session.get('cartItems', None) != None:
+            session['cartItems'] = [item for item in session.get('cartItems', []) if item['id'] != request.json]
+            return jsonify({'success': True}), 200
+        else:
+            return jsonify({'success': False}), 400
+    return render_template('cart.html', username=session.get('user_id', None), items=session.get('cartItems', []))
 
 @app.route('/profile', methods=['GET', 'POST'])
 def profile():
@@ -87,7 +129,10 @@ def get_image():
     
 @app.route('/signup')
 def signup():
-    return render_template('register.html')
+    if session.get('user_id', None) is None:
+        return render_template('register.html', username=session.get('user_id', None))
+    else:
+        return redirect(url_for('profile'))
 
 # Route: Register
 @app.route('/register', methods=['GET', 'POST'])
@@ -144,6 +189,20 @@ def login():
 def logout():
     if session.get('user_id', None) is not None:
         session.pop('user_id', None)
+    if session.get('cartItems', None) is not None:
+        session.pop('cartItems', None)
+    if session.get('inputdata', None) is not None:
+        session.pop('inputdata', None)
+    if session.get('totalCalories', None) is not None:
+        session.pop('totalCalories', None)
+    if session.get('totalFat', None) is not None:
+        session.pop('totalFat', None)
+    if session.get('totalProtein', None) is not None:
+        session.pop('totalProtein', None)
+    if session.get('results', None) is not None:
+        session.pop('results', None)
+    if session.get('resultsOptimal', None) is not None:
+        session.pop('resultsOptimal', None)
     return redirect(url_for('home'))
 
 @app.route('/deleteprofile')
@@ -157,11 +216,160 @@ def deleteProfile():
  
     return redirect(url_for('home'))
 
+@app.route('/compute', methods=['GET', 'POST'])
+def compute():
+    if session.get('user_id', None) is None:
+        return render_template('register.html', username=session.get('user_id', None))
+    if request.method == 'POST':
+        #try:
+        data = request.get_json()
+        if data.get('computeType') == "init":
+            session['inputdata'] = data
+            session['totalCalories'] = 0.0
+            session['totalFat'] = 0.0
+            session['totalProtein'] = 0.0
+            session['totalCarbs'] = 0.0
+            session['cartItems'] = []
+        else: #add to cart link calories protein fat carbs amount
+            session['totalCalories'] = session.get('totalCalories', 0) + float(data.get('item')['2']) * float(data.get('item')['8'])
+            session['totalFat'] = session.get('totalFat', 0) + float(data.get('item')['3']) * float(data.get('item')['8'])
+            session['totalProtein'] = session.get('totalProtein', 0) + float(data.get('item')['4']) * float(data.get('item')['8'])
+            session['totalCarbs'] = session.get('totalCarbs', 0) + float(data.get('item')['5']) * float(data.get('item')['8'])
+            if 'cartItems' not in session:
+                session['cartItems'] = []
+            dat = data.get('item')
+            dat['2'] = round(float(data.get('item')['2']) * float(data.get('item')['8']), 1)
+            dat['3'] = round(float(data.get('item')['3']) * float(data.get('item')['8']), 1)
+            dat['4'] = round(float(data.get('item')['4']) * float(data.get('item')['8']), 1)
+            dat['5'] = round(float(data.get('item')['5']) * float(data.get('item')['8']), 1)
+            dat['id'] = len(session['cartItems'])
+            session['cartItems'].append(dat)
+            data = session['inputdata']
+
+        a1 = float(data.get('minCalories'))
+        a2 = float(data.get('maxCalories'))
+        a3 = float(data.get('minFat'))
+        a4 = float(data.get('maxFat'))
+        a5 = float(data.get('minProtein'))
+        a6 = float(data.get('maxProtein'))
+        a7 = float(data.get('minCarbs'))
+        a8 = float(data.get('maxCarbs'))
+        a9 = float(data.get('weightTaste'))
+        a10 = float(data.get('weightPrice'))
+        store = data.get('store')
+
+        uid = db.session.query(User.id).filter_by(email=session.get('user_id',None)).first()[0]
+
+        # updating food ratings
+        if store == "Rimi":
+            food_groups_with_ratings = data.get('foodGroupsWithRatings', [])
+            for item in food_groups_with_ratings:
+                group_name = item.get('name')
+                rating = item.get('rating')
+                foods = db.session.query(FoodRimi.id).filter_by(last_category=group_name).all()
+                for food in foods:
+                    foodRating = db.session.query(FoodRatingRimi).filter(FoodRatingRimi.food_id==food[0], FoodRatingRimi.user_id==uid).first()
+                    if foodRating != None:
+                        foodRating.rating = rating
+                    else:
+                        food2 = FoodRatingRimi(uid, food[0], rating)
+                        db.session.add(food2)
+            db.session.commit()
+            foods_with_ratings = data.get('foodsWithRatings', [])
+            for item in foods_with_ratings:
+                id = item.get('id')
+                rating = item.get('rating')
+                foodRating = db.session.query(FoodRatingRimi).filter(FoodRatingRimi.food_id==id, FoodRatingRimi.user_id==uid).first()
+                if foodRating != None:
+                    foodRating.rating = rating
+                else:
+                    food = FoodRatingRimi(uid, id, rating)
+                    db.session.add(food)
+            db.session.commit()
+        else:
+            food_groups_with_ratings = data.get('foodGroupsWithRatings', [])
+            for item in food_groups_with_ratings:
+                group_name = item.get('name')
+                rating = item.get('rating')
+                foods = db.session.query(FoodBarbora.id).filter_by(last_category=group_name).all()
+                if rating != None:
+                    for food in foods:
+                        foodRating = db.session.query(FoodRatingBarbora).filter(FoodRatingBarbora.food_id==food[0], FoodRatingBarbora.user_id==uid).first()
+                        if foodRating != None:
+                            foodRating.rating = rating
+                        else:
+                            food2 = FoodRatingBarbora(uid, food[0], rating)
+                            db.session.add(food2)
+            db.session.commit()
+            foods_with_ratings = data.get('foodsWithRatings', [])
+            for item in foods_with_ratings:
+                id = item.get('id')
+                rating = item.get('rating')
+                if rating != None:
+                    foodRating = db.session.query(FoodRatingBarbora).filter(FoodRatingBarbora.food_id==id, FoodRatingBarbora.user_id==uid).first()
+                    if foodRating != None:
+                        foodRating.rating = rating
+                    else:
+                        food = FoodRatingBarbora(uid, id, rating)
+                        db.session.add(food)
+            db.session.commit()
+        
+        # solver
+        results = "N/A"
+        if store == "Rimi":
+            arr = db.session.query(
+                FoodRimi.id,
+                FoodRimi.pricePerKg,
+                case(
+                    (FoodRatingBarbora.food_id == FoodBarbora.id, FoodRatingBarbora.rating),  # condition and result as a positional argument
+                    else_=5
+                ).label("rating"),
+                FoodRimi.calories,
+                FoodRimi.fat,
+                FoodRimi.protein,
+                FoodRimi.carbs,
+                FoodBarbora.name,
+                FoodBarbora.link
+            ).outerjoin(
+                FoodRatingRimi, 
+                (FoodRimi.id == FoodRatingRimi.food_id) & (FoodRatingRimi.user_id == uid)
+            ).all()
+        else:
+            arr = db.session.query(
+                FoodBarbora.id,
+                FoodBarbora.pricePerKg,
+                case(
+                    (FoodRatingBarbora.food_id == FoodBarbora.id, FoodRatingBarbora.rating),  # condition and result as a positional argument
+                    else_=5
+                ).label("rating"),
+                FoodBarbora.calories,
+                FoodBarbora.fat,
+                FoodBarbora.protein,
+                FoodBarbora.carbs,
+                FoodBarbora.name,
+                FoodBarbora.link
+            ).outerjoin(
+                FoodRatingBarbora, 
+                (FoodBarbora.id == FoodRatingBarbora.food_id) & (FoodRatingBarbora.user_id == uid)
+            ).all()
+        arr = [
+            item for item in arr 
+            if all(value is not None for value in item)
+        ]
+        results = SolverModel(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, arr, session['totalCalories'], session['totalFat'], session['totalProtein'], session['totalCarbs']).solve()
+        resultsOptimal = results[results[:, -1].astype(float) > 0.05]
+        session['results'] = results.tolist()
+        session['resultsOptimal'] = resultsOptimal.tolist()
+        return jsonify({'success': True}), 200
+        #except:
+        #    return jsonify({'success': False}), 400
+    return render_template('results.html', username=session.get('user_id', None), results=session.get('results', None), resultsOptimal=session.get('resultsOptimal', None))
+
 @app.route('/debug') # Remove this later
 def debug():
     return render_template("debug.html", foods=db.session.query(FoodBarbora).all())
 
 if __name__ == '__main__':
     init_db()
-    app.run()
+    app.run(debug=True)
     foodscraper.run()

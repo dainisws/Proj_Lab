@@ -6,30 +6,47 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/logoo.ico') }}">
-  <title>ToiT</title> 
+  <title>ToiT</title>  
   <style type="text/css"> 
    /* General body styling */
    
   </style> 
 </head> 
 <body> 
-  <!-- Header with logo, navigation, and cart icon -->
-  {% include "header.html" %}
+<!-- Header with logo, navigation, and cart icon -->
+{% include "header.html" %}
 
-  <!-- Main content area with logo and descriptions -->
-  <div id="main"> 
-    <!-- Content Boxes -->
-    <div class="content-boxes">
-      <!-- Box 1 -->
-      <div class="box">
-        <p class='centered-text'><h2>Shopping Cart</h2></p>
-        <p>adasdadadadsadasdsadadaasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaad<br>aaaaaaaaaaaaaaaaaaaaa<br> asdasdadadadadadadaddddd</p>
-        <br><br><br><br><br><br><br><br><br><br> <br><br><br><br>
+<!-- Main content area with logo and descriptions -->
+<div id="main"> 
+  <!-- Content Boxes -->
+  <div class="content-boxes">
+    <!-- Box 1 -->
+    <div class="box">
+        {% if items %}
+            {% for item in items %}
+                <div class="small-box">
+                    <img src="{{ url_for('static', filename='images/bag.jpg') }}" alt="" class="food-image">
+                    <div class="food-details">
+                        <h2 class="centered-text"><b><a href="{{ item['7'] }}" target="_blank">{{ item['6'] }}</a></b></h2>
+                        <p>Amount: {{ item['8'] }}g</p>
+                        <p>Calories: {{ item['2'] }}</p>
+                        <p>Fat: {{ item['3'] }}g</p>
+                        <p>Protein: {{ item['4'] }}g</p>
+                        <p>Carbohydrates: {{ item['5'] }}g</p>
+                        <button class="delete-button" onclick="deleteItem({{ item['id'] }})">Delete</button>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <h1>No items added</h1>
+        {% endif %}
       </div>
     </div>
-  </div> 
+  </div>
+</div> 
 
-  <!-- Footer with copyright info -->
-  <div class="footer">&copy; MenuGen<br>Version 1.0</div>
+<!-- Footer with copyright info -->
+<div class="footer">&copy; 2024 MenuGen<br>Version: 1.0</div>
+<script src="{{ url_for('static', filename='js/cart.js') }}"></script>
 </body> 
 </html>

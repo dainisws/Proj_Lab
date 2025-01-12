@@ -17,7 +17,7 @@ with open("config.yml", "r") as file:
 
 def writeRimi(store, link, name, mainCategory, lastCategory, info, amount, pricePerKg, calories, protein, fat, carbs):
     with app.app_context():
-        food = FoodRimi(store, link, name, mainCategory, lastCategory, info, amount, pricePerKg, calories, protein, fat, carbs)
+        food = FoodRimi(store, link, name, mainCategory.strip(), lastCategory.strip(), info, amount, pricePerKg, calories, protein, fat, carbs)
         db.session.add(food)
         db.session.commit()
 
@@ -28,7 +28,7 @@ def updatePriceRimi(link, pricePerKg):
 
 def writeBarbora(store, link, name, mainCategory, lastCategory, info, amount, pricePerKg, calories, protein, fat, carbs):
     with app.app_context():
-        food = FoodBarbora(store, link, name, mainCategory, lastCategory, info, amount, pricePerKg, calories, protein, fat, carbs)
+        food = FoodBarbora(store, link, name, mainCategory.strip(), lastCategory.strip(), info, amount, pricePerKg, calories, protein, fat, carbs)
         db.session.add(food)
         db.session.commit()
 

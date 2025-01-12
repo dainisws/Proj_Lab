@@ -24,15 +24,8 @@
 
       <!-- Tabs -->
       <div class="tabs">
-        <button id="barbora" value="barbora" onclick="buttonClicked(this)">Barbora</button>  
+        <button id="barbora" class="active" value="barbora" onclick="buttonClicked(this)">Barbora</button>  
         <button id="rimi" value="rimi" onclick="buttonClicked(this)">Rimi</button>  
-      </div>
-
-      <!-- Maximum Cooking Time -->
-      <div>
-        <p><strong>Maximum Cooking Time</strong></p>
-        <p class="description">The maximum amount of time you are willing to allocate to cooking</p>
-        <input type="number" placeholder="Hours">
       </div>
 
       <!-- Nutrition -->
@@ -43,29 +36,29 @@
         <!-- Calories Input -->
         <div class="input-group">
           <p>Calories</p>
-          <input type="number" placeholder="Min">
-          <input type="number" placeholder="Max">
+          <input type="number" placeholder="Min" id="minCalories">
+          <input type="number" placeholder="Max" id="maxCalories">
         </div>
 
         <!-- Fat Input -->
         <div class="input-group">
           <p>Fat</p>
-          <input type="number" placeholder="Min">
-          <input type="number" placeholder="Max">
+          <input type="number" placeholder="Min" id="minFat">
+          <input type="number" placeholder="Max" id="maxFat">
         </div>
 
         <!-- Protein Input -->
         <div class="input-group">
           <p>Protein</p>
-          <input type="number" placeholder="Min">
-          <input type="number" placeholder="Max">
+          <input type="number" placeholder="Min" id="minProtein">
+          <input type="number" placeholder="Max" id="maxProtein">
         </div>
 
         <!-- Carbohydrates Input -->
         <div class="input-group">
           <p>Carbohydrates</p>
-          <input type="number" placeholder="Min">
-          <input type="number" placeholder="Max">
+          <input type="number" placeholder="Min" id="minCarbs">
+          <input type="number" placeholder="Max" id="maxCarbs">
         </div>
       </div>
 
@@ -80,57 +73,18 @@
             <div class="modal-content">
               <!-- <button class="close" id="closeModal">&times;</button> -->
               <h1>Food Preferences</h1>
-              <p>Give foods a rating on a scale of 1 to 10, you can rate food groups or individual foods.</p>
+              <p>Give foods a rating on a scale of 1 to 10, you can rate food groups or specific foods.</p>
         
               <div class="section">
-                <h2>Foods</h2>
-                <div class="food-group">
-                  <label>Dairy <span class="toggle">+</span></label>
-                  <input type="number" min="1" max="10">
+                <h2>Food Groups</h2>
+                <p>Group ratings aren't saved, but it will update and save all related food ratings.</p>
+                <input type="text" id="searchInput1" placeholder="Search items..." oninput="filterItems1()"/>
+                <div class="food-section" id="food-section-1">
                 </div>
-                <div class="food-group">
-                  <label>Fruits <span class="toggle">-</span></label>
-                  <input type="number" min="1" max="10">
-                  <div class="sub-group">
-                    <div>
-                      <label>Apples</label>
-                      <input type="number" min="1" max="10">
-                    </div>
-                    <div>
-                      <label>Bananas</label>
-                      <input type="number" min="1" max="10">
-                    </div>
-                    <div>
-                      <label>Strawberries</label>
-                      <input type="number"  min="1" max="10">
-                    </div>
-                  </div>
+                <h2>Specific Foods</h2>
+                <input type="text" id="searchInput2" placeholder="Search items..." oninput="filterItems2()"/>
+                <div class="food-section" id="food-section-2">
                 </div>
-              </div>
-        
-              <div class="section">
-                <h2>Recipes</h2>
-                <div class="recipes">
-                  <input type="text" placeholder="Recipe Sample Text">
-                  <input type="number" min="1" max="10">
-                </div>
-                <input type="text" placeholder="Search">
-              </div>
-        
-              <div class="section">
-                <h2>Add Custom</h2>
-                <div class="custom-fields">
-                  <input type="text" placeholder="Fat">
-                  <input type="text" placeholder="Protein">
-                  <input type="text" placeholder="Carbohydrates">
-                  <input type="text" placeholder="Name">
-                  <input type="url" placeholder="Link">
-                  <div class="privacy">
-                    <label><input type="radio" name="privacy" value="private" checked> Private</label>
-                    <label><input type="radio" name="privacy" value="public"> Public</label>
-                  </div>
-                </div>
-                <button class="submit">Submit</button>
               </div>
         
               <div class="section">
@@ -154,11 +108,11 @@
       <!-- Price to Taste Balance -->
       <div>
         <p><strong>Price To Taste Balance</strong></p>
-        <input type="range" min="0" max="100" step="1">
+        <input type="range" min="0" max="100" step="1" id="weights">
       </div>
 
       <!-- Compute Button -->
-      <button class="compute-btn">Compute</button>
+      <button class="compute-btn" onclick="compute()">Compute</button>
     </div>
   </div>
 

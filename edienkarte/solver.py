@@ -2,85 +2,116 @@
 
 from scipy.optimize import minimize
 import numpy as np
+from functools import partial
 
-prices = np.array([5.29, 2.69, 7.99]) / 1000 # price per gram
-tastes = np.array([5, 7, 10]) # iespējams, ka vajadzētu normalizēt starp cenām (1 - zemākā cena, 10 - augstākā cena)
-times = np.array([0, 30, 30])
-calories = np.array([200, 300, 300]) / 100 # calories per gram
-fat = np.array([5.2, 11.1, 11.1]) / 100
-protein = np.array([5.2, 11.1, 11.1]) / 100
-carbs = np.array([5.2, 11.1, 11.1]) / 100
-
-def objective_function(variables):
-    totalPrice = np.sum(variables*prices)
-    totalTaste = np.sum(variables*tastes)
-    w1 = 0
-    w2 = 1
-    return totalPrice*w1-totalTaste*w2
-
-def constraint_min_time(variables):
-    return np.where(variables > times, times, 0).sum()
-
-def constraint_max_time(variables):
-    maxTime = 180
-    return maxTime - np.where(variables > times, times, 0).sum()
-
-def constraint_min_calories(variables):
+class SolverModel():
     minCalories = 2000
-    totalCalories = np.sum(variables*calories)
-    return totalCalories - minCalories
+    maxCalories = 4000
+    minFat = 0
+    maxFat = 1000
+    minProtein = 0
+    maxProtein = 1000
+    minCarbs = 0
+    maxCarbs = 1000
+    weightTaste = 0.5
+    weightPrice = 0.5
+    size = 3
 
-def constraint_max_calories(variables):
-    maxCalories = 2700
-    totalCalories = np.sum(variables*calories)
-    return maxCalories - totalCalories
+    id = np.array([1, 2, 3])
+    prices = np.array([5.29, 2.69, 7.99]) / 1000 # price per gram
+    tastes = np.array([5, 7, 10]) # iespējams, ka vajadzētu normalizēt starp cenām (1 - zemākā cena, 10 - augstākā cena)
+    calories = np.array([200, 300, 300]) / 100 # calories per gram
+    fat = np.array([5.2, 11.1, 11.1]) / 100
+    protein = np.array([5.2, 11.1, 11.1]) / 100
+    carbs = np.array([5.2, 11.1, 11.1]) / 100
+    names = np.array(["1", "2", "3"])
+    links = np.array(["#", "#", "#"])
 
-def constraint_min_fat(variables):
-    minFat = 40
-    totalFat = np.sum(variables*fat)
-    return totalFat - minFat
+    def __init__(self, minCalories, maxCalories, minFat, maxFat, minProtein, maxProtein, minCarbs, maxCarbs, weightTaste, weightPrice, arr, totalCalories, totalFat, totalProtein, totalCarbs):
+        self.minCalories = float(max(0.0, minCalories - totalCalories))
+        self.maxCalories = float(max(0.0, maxCalories - totalCalories))
+        self.minFat = float(max(0.0, minFat - totalFat))
+        self.maxFat = float(max(0.0, maxFat - totalFat))
+        self.minProtein = float(max(0.0, minProtein - totalProtein))
+        self.maxProtein = float(max(0.0, maxProtein - totalProtein))
+        self.minCarbs = float(max(0.0, minCarbs - totalCarbs))
+        self.maxCarbs = float(max(0.0, maxCarbs - totalCarbs))
+        self.weightTaste = float(weightTaste)
+        self.weightPrice = float(weightPrice)
+        self.id = np.array([item[0] for item in arr])
+        self.prices = np.array([item[1] for item in arr]) / 1000
+        self.tastes = np.array([item[2] for item in arr])
+        self.calories = np.array([item[3] for item in arr]) / 100
+        self.fat = np.array([item[4] for item in arr]) / 100
+        self.protein = np.array([item[5] for item in arr]) / 100
+        self.carbs = np.array([item[6] for item in arr]) / 100
+        self.names = np.array([item[7] for item in arr])
+        self.links = np.array([item[8] for item in arr])
+        self.size = len(self.carbs)
+        print(self.minCalories, self.maxCalories, totalCalories, minCalories, self.protein)
 
-def constraint_max_fat(variables):
-    maxFat = 100
-    totalFat = np.sum(variables*fat)
-    return maxFat - totalFat
+    def objective_function(self, variables):
+        totalPrice = np.sum(variables*self.prices)
+        totalTaste = np.sum(variables*self.tastes)
+        return totalPrice*self.weightPrice-totalTaste*self.weightTaste
 
-def constraint_min_protein(variables):
-    minProtein = 100
-    totalProtein = np.sum(variables*protein)
-    return totalProtein - minProtein
+    def constraint_min_calories(self, variables):
+        totalCalories = np.sum(variables*self.calories)
+        return totalCalories - self.minCalories
 
-def constraint_max_protein(variables):
-    maxProtein = 200
-    totalProtein = np.sum(variables*protein)
-    return maxProtein - totalProtein
+    def constraint_max_calories(self, variables):
+        totalCalories = np.sum(variables*self.calories)
+        return self.maxCalories - totalCalories
 
-def constraint_min_carbs(variables):
-    minCarbs = 100
-    totalCarbs = np.sum(variables*carbs)
-    return totalCarbs - minCarbs
+    def constraint_min_fat(self, variables):
+        totalFat = np.sum(variables*self.fat)
+        return totalFat - self.minFat
 
-def constraint_max_carbs(variables):
-    maxCarbs = 300
-    totalCarbs = np.sum(variables*carbs)
-    return maxCarbs - totalCarbs
+    def constraint_max_fat(self, variables):
+        totalFat = np.sum(variables*self.fat)
+        return self.maxFat - totalFat
 
-constraints = (
-    {'type': 'ineq', 'fun': constraint_min_time},
-    {'type': 'ineq', 'fun': constraint_max_time},
-    {'type': 'ineq', 'fun': constraint_min_calories},
-    {'type': 'ineq', 'fun': constraint_max_calories},
-    {'type': 'ineq', 'fun': constraint_min_fat},
-    {'type': 'ineq', 'fun': constraint_max_fat},
-    {'type': 'ineq', 'fun': constraint_min_protein},
-    {'type': 'ineq', 'fun': constraint_max_protein},
-    {'type': 'ineq', 'fun': constraint_min_carbs},
-    {'type': 'ineq', 'fun': constraint_max_carbs}
-)
+    def constraint_min_protein(self, variables):
+        totalProtein = np.sum(variables*self.protein)
+        return totalProtein - self.minProtein
 
-def solve(arr):
-    initial_guess = [1] * 3 # 3 ir produktu skaits
-    bounds = [(0, None)] * 3 # 3 ir produktu skaits
-    result = minimize(objective_function, initial_guess, constraints=constraints, bounds=bounds, method = "SLSQP")
-    # return input array and append results at the end
-    # result.x // grams
+    def constraint_max_protein(self, variables):
+        totalProtein = np.sum(variables*self.protein)
+        return self.maxProtein - totalProtein
+
+    def constraint_min_carbs(self, variables):
+        totalCarbs = np.sum(variables*self.carbs)
+        return totalCarbs - self.minCarbs
+
+    def constraint_max_carbs(self, variables):
+        totalCarbs = np.sum(variables*self.carbs)
+        return self.maxCarbs - totalCarbs
+
+    def solve(self):
+
+        constraints = (
+            {'type': 'ineq', 'fun': partial(self.constraint_min_calories)},
+            {'type': 'ineq', 'fun': partial(self.constraint_max_calories)},
+            {'type': 'ineq', 'fun': partial(self.constraint_min_fat)},
+            {'type': 'ineq', 'fun': partial(self.constraint_max_fat)},
+            {'type': 'ineq', 'fun': partial(self.constraint_min_protein)},
+            {'type': 'ineq', 'fun': partial(self.constraint_max_protein)},
+            {'type': 'ineq', 'fun': partial(self.constraint_min_carbs)},
+            {'type': 'ineq', 'fun': partial(self.constraint_max_carbs)}
+        )
+
+        initial_guess = [0] * self.size
+        bounds = [(0, None)] * self.size
+        result = minimize(self.objective_function, initial_guess, constraints=constraints, bounds=bounds, method = "SLSQP")
+        combined = np.vstack([
+            self.prices,
+            self.tastes,
+            self.calories,
+            self.fat,
+            self.protein,
+            self.carbs,
+            self.names,
+            self.links,
+            [round(x, 1) for x in result.x]
+        ]).T
+        return combined

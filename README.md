@@ -95,9 +95,8 @@ Diagramma parāda, ka, palielinoties apstrādāto produktu skaitam, patērētais
 
 ## •Kā palaist mājaslapu
 1.Ielādēt mapi "edienkarte" no GitHub.
-2.Instalēt nepieciešamās Python bibliotēkas: pip install beautifulsoup4, pip install scipy, pip install selenium, pip install pyyaml, pip install Flask, pip install Flask-SQLAlchemy, pip install Werkzeug  
-3.Palaist failu main.py (iespējams, izmantojot Python).
-4.Mājaslapa būs pieejama Firefox pārlūkā, atverot adresi http://localhost:5000.
+<br>2.Instalēt nepieciešamās Python bibliotēkas: pip install beautifulsoup4, pip install scipy, pip install selenium, pip install pyyaml, pip install Flask, pip install Flask-SQLAlchemy, pip install Werkzeug.  <br>3.Palaist failu main.py (iespējams, izmantojot Python).
+<br>4.Mājaslapa būs pieejama Firefox pārlūkā, atverot adresi http://localhost:5000.
 
 ## •Grupas dalībnieku veikums
 | Dalībnieks              | Paveiktais                                                                 |

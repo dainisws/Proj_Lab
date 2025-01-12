@@ -87,7 +87,7 @@ Prioritātēm izvelētā metode: MoSCoW
 
 ## •Novērtēšanas rezultāti
 ![alt text](https://github.com/dainisws/Proj_Lab/blob/787104153b4390c3513d075c29569e04d3bedc1b/grafiks.jpeg)
-# •Secinājums
+## •Secinājums
 Diagramma parāda, ka, palielinoties apstrādāto produktu skaitam, patērētais laiks pieaug proporcionāli, kas var ievērojami ietekmēt programmas veiktspēju, samazinot tās efektivitāti
 
 ## •Plakāts

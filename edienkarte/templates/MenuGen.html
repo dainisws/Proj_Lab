@@ -88,14 +88,6 @@
               </div>
         
               <div class="section">
-                <h2>Allergies</h2>
-                <div class="tags">
-                  <span class="tag">Lactose</span>
-                  <span class="tag">Gluten</span>
-                  <span class="tag">Soy</span>
-                  <span class="tag">Meat</span>
-                  <span class="tag">Fish</span>
-                </div>
                 <button class="close" id="closeModal">Close</button> 
               </div>
         
@@ -108,7 +100,11 @@
       <!-- Price to Taste Balance -->
       <div>
         <p><strong>Price To Taste Balance</strong></p>
-        <input type="range" min="0" max="100" step="1" id="weights">
+        <div class="range-container">
+          <label for="rangeInput" class="range-label">Minimize Price</label>
+          <input type="range" id="weights" min="0" max="100" step="1" value="50">
+          <label for="rangeInput" class="range-label">Maximize Taste</label>
+        </div>
       </div>
 
       <!-- Compute Button -->

@@ -23,6 +23,9 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///{}".format(os.path.join(os.pa
 db = SQLAlchemy(app)
 ALLOWED_EXTENSIONS = {'jpg', 'jpeg'}
 
+result_data = {}
+optimal_result_data = {}
+
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
@@ -84,8 +87,8 @@ def legal():
 
 @app.route('/cart', methods=['GET', 'POST'])
 def cart():
-    if session.get('user_id', None) == None:
-        redirect(url_for('home'))
+    if session.get('user_id', None) is None:
+        return render_template('register.html', username=session.get('user_id', None))
     if request.method == 'POST':
         if session.get('cartItems', None) != None:
             removed_items = [item for item in session.get('cartItems', []) if item['id'] == request.json]
@@ -223,10 +226,6 @@ def logout():
         session.pop('totalProtein', None)
     if session.get('totalPrice', None) is not None:
         session.pop('totalPrice', None)
-    if session.get('results', None) is not None:
-        session.pop('results', None)
-    if session.get('resultsOptimal', None) is not None:
-        session.pop('resultsOptimal', None)
     return redirect(url_for('home'))
 
 @app.route('/deleteprofile')
@@ -294,25 +293,27 @@ def compute():
             for item in food_groups_with_ratings:
                 group_name = item.get('name')
                 rating = item.get('rating')
-                foods = db.session.query(FoodRimi.id).filter_by(last_category=group_name).all()
-                for food in foods:
-                    foodRating = db.session.query(FoodRatingRimi).filter(FoodRatingRimi.food_id==food[0], FoodRatingRimi.user_id==uid).first()
-                    if foodRating != None:
-                        foodRating.rating = rating
-                    else:
-                        food2 = FoodRatingRimi(uid, food[0], rating)
-                        db.session.add(food2)
+                if rating != None:
+                    foods = db.session.query(FoodRimi.id).filter_by(last_category=group_name).all()
+                    for food in foods:
+                        foodRating = db.session.query(FoodRatingRimi).filter(FoodRatingRimi.food_id==food[0], FoodRatingRimi.user_id==uid).first()
+                        if foodRating != None:
+                            foodRating.rating = rating
+                        else:
+                            food2 = FoodRatingRimi(uid, food[0], rating)
+                            db.session.add(food2)
             db.session.commit()
             foods_with_ratings = data.get('foodsWithRatings', [])
             for item in foods_with_ratings:
                 id = item.get('id')
                 rating = item.get('rating')
-                foodRating = db.session.query(FoodRatingRimi).filter(FoodRatingRimi.food_id==id, FoodRatingRimi.user_id==uid).first()
-                if foodRating != None:
-                    foodRating.rating = rating
-                else:
-                    food = FoodRatingRimi(uid, id, rating)
-                    db.session.add(food)
+                if rating != None:
+                    foodRating = db.session.query(FoodRatingRimi).filter(FoodRatingRimi.food_id==id, FoodRatingRimi.user_id==uid).first()
+                    if foodRating != None:
+                        foodRating.rating = rating
+                    else:
+                        food = FoodRatingRimi(uid, id, rating)
+                        db.session.add(food)
             db.session.commit()
         else:
             food_groups_with_ratings = data.get('foodGroupsWithRatings', [])
@@ -389,17 +390,18 @@ def compute():
         filtered_arr = [record for record in arr if record[8] not in cart_links]
         results = SolverModel(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, filtered_arr, session['totalCalories'], session['totalFat'], session['totalProtein'], session['totalCarbs']).solve()
         resultsOptimal = results[results[:, -1].astype(float) > 0.05]
-        session['results'] = results.tolist()
-        session['resultsOptimal'] = resultsOptimal.tolist()
+
+        global result_data, optimal_result_data
+        result_data[session['user_id']] = results.tolist()
+        optimal_result_data[session['user_id']] = resultsOptimal.tolist()
 
         delta = int(round(time.time() * 1000)) - milli_sec
-        print("Processing time:", str(delta) + "ms")
         return jsonify({'success': True}), 200
         #except:
         #    return jsonify({'success': False}), 400
     return render_template('results.html', username=session.get('user_id', None), 
-                            results=session.get('results', None), 
-                            resultsOptimal=session.get('resultsOptimal', None), 
+                            results=result_data.get(session['user_id'], None), 
+                            resultsOptimal=optimal_result_data.get(session['user_id'], None), 
                             calories = round(session.get('totalCalories', 0.0), 2), 
                             fat = round(session.get('totalFat', 0.0), 2), 
                             protein = round(session.get('totalProtein', 0.0), 2), 

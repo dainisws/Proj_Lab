@@ -41,6 +41,14 @@ class SolverModel():
         self.id = np.array([item[0] for item in arr])
         self.prices = np.array([item[1] for item in arr]) / 1000
         self.tastes = np.array([item[2] for item in arr])
+
+        # Garšas normalizācija pret cenu
+        min_price = np.min(self.prices) * 1000
+        max_price = np.max(self.prices) * 1000
+        min_taste = np.min(self.tastes)
+        max_taste = np.max(self.tastes)
+        self.tastes = min_price + ((self.tastes - min_taste) / (max_taste - min_taste)) * (max_price - min_price)
+
         self.calories = np.array([item[3] for item in arr]) / 100
         self.fat = np.array([item[4] for item in arr]) / 100
         self.protein = np.array([item[5] for item in arr]) / 100

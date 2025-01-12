@@ -324,3 +324,15 @@ html, body {
       color: #444;
       margin: 10px 0px;
     }
+
+    .range-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .range-label {
+      font-size: 14px;
+    }
+    input[type="range"] {
+      flex-grow: 1;
+    }

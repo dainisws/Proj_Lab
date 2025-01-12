@@ -1,6 +1,6 @@
-from sqlalchemy import Column, String, Integer, Text, Float, LargeBinary, create_engine
+from sqlalchemy import Column, String, Integer, Text, Float, LargeBinary, ForeignKey, create_engine
 import os
-from sqlalchemy.orm import declarative_base
+from sqlalchemy.orm import declarative_base, relationship
 
 Base = declarative_base()
 
@@ -96,6 +96,18 @@ class User(Base):
     password = Column(Text, nullable=False)
     profile_picture =  Column(LargeBinary, nullable=True)
 
+    food_ratings_rimi = relationship(
+        "FoodRatingRimi",
+        back_populates="user",
+        cascade="all, delete-orphan"
+    )
+
+    food_ratings_barbora = relationship(
+        "FoodRatingBarbora",
+        back_populates="user",
+        cascade="all, delete-orphan"
+    )
+
     def __init__(self, username, email, password, profile_picture):
         self.username = username
         self.email = email
@@ -107,9 +119,11 @@ class FoodRatingRimi(Base):
     __tablename__ = "FoodRatingsRimi"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    user_id = Column(Integer, nullable=False)
+    user_id = Column(Integer, ForeignKey("Users.id", ondelete="CASCADE"), nullable=False)
     food_id = Column(Integer, nullable=False)
     rating = Column(Float, nullable=False)
+
+    user = relationship("User", back_populates="food_ratings_rimi")
 
     def __init__(self, user_id, food_id, rating):
         self.user_id = user_id
@@ -121,9 +135,11 @@ class FoodRatingBarbora(Base):
     __tablename__ = "FoodRatingsBarbora"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    user_id = Column(Integer, nullable=False)
+    user_id = Column(Integer, ForeignKey("Users.id", ondelete="CASCADE"), nullable=False)
     food_id = Column(Integer, nullable=False)
     rating = Column(Float, nullable=False)
+
+    user = relationship("User", back_populates="food_ratings_barbora")
 
     def __init__(self, user_id, food_id, rating):
         self.user_id = user_id

@@ -73,12 +73,20 @@ Prioritātēm izvelētā metode: MoSCoW
 |C|Varētu būt (Could have)|
 |W|Nevajadzētu būt (Would not have)|
 
+##  •Algoritms
+![alt text](https://github.com/dainisws/Proj_Lab/blob/787104153b4390c3513d075c29569e04d3bedc1b/algoritms.jpeg)
+
 ##  •Konceptu modelis
 ![alt text](https://github.com/dainisws/Proj_Lab/blob/b29b8077ea2b86cf281094b2a897dd7491895858/konceptu%20modelis.jpeg)
 
 ##  •Tehnoloģiju steks
-![alt text](https://raw.githubusercontent.com/dainisws/Proj_Lab/refs/heads/main/tehnologiju_steks.png)
+![alt text](https://github.com/dainisws/Proj_Lab/blob/787104153b4390c3513d075c29569e04d3bedc1b/tehnologiju_steks.png)
 
 ## •Risinājuma novērtēšanas plāns
 ![image](https://github.com/user-attachments/assets/be2db296-70cb-44b7-bcb7-778b73a58806)
+
+## •Novērtēšanas rezultāti
+![alt text](https://github.com/dainisws/Proj_Lab/blob/787104153b4390c3513d075c29569e04d3bedc1b/grafiks.jpeg)
+
+
 

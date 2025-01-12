@@ -8,6 +8,7 @@ from flask import render_template
 from werkzeug.security import generate_password_hash, check_password_hash # pip install Werkzeug
 from solver import SolverModel
 from sqlalchemy import case
+import time
 
 app = Flask(__name__)
 
@@ -241,6 +242,7 @@ def deleteProfile():
 
 @app.route('/compute', methods=['GET', 'POST'])
 def compute():
+    milli_sec = int(round(time.time() * 1000))
     if session.get('user_id', None) is None:
         return render_template('register.html', username=session.get('user_id', None))
     if request.method == 'POST':
@@ -347,15 +349,15 @@ def compute():
                 FoodRimi.id,
                 FoodRimi.pricePerKg,
                 case(
-                    (FoodRatingBarbora.food_id == FoodBarbora.id, FoodRatingBarbora.rating),  # condition and result as a positional argument
+                    (FoodRatingRimi.food_id == FoodRimi.id, FoodRatingRimi.rating),  # condition and result as a positional argument
                     else_=5
                 ).label("rating"),
                 FoodRimi.calories,
                 FoodRimi.fat,
                 FoodRimi.protein,
                 FoodRimi.carbs,
-                FoodBarbora.name,
-                FoodBarbora.link
+                FoodRimi.name,
+                FoodRimi.link
             ).outerjoin(
                 FoodRatingRimi, 
                 (FoodRimi.id == FoodRatingRimi.food_id) & (FoodRatingRimi.user_id == uid)
@@ -389,6 +391,9 @@ def compute():
         resultsOptimal = results[results[:, -1].astype(float) > 0.05]
         session['results'] = results.tolist()
         session['resultsOptimal'] = resultsOptimal.tolist()
+
+        delta = int(round(time.time() * 1000)) - milli_sec
+        print("Processing time:", str(delta) + "ms")
         return jsonify({'success': True}), 200
         #except:
         #    return jsonify({'success': False}), 400

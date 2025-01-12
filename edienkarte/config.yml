@@ -1,4 +1,4 @@
 scraper:
   geckodriver_path: C:\Program Files\Mozilla Firefox\geckodriver.exe
-  last_scrape: 1736455153226
+  last_scrape: 1736651960372
   use: false

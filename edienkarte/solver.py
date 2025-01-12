@@ -48,8 +48,8 @@ class SolverModel():
         self.names = np.array([item[7] for item in arr])
         self.links = np.array([item[8] for item in arr])
         self.size = len(self.carbs)
-        print(self.minCalories, self.maxCalories, self.minFat, self.maxFat, self.minProtein, self.maxProtein, self.minCarbs, self.maxCarbs,
-              self.weightTaste, self.weightPrice, totalCalories, totalFat, totalProtein, totalCarbs, self.calories)
+        #print(self.minCalories, self.maxCalories, self.minFat, self.maxFat, self.minProtein, self.maxProtein, self.minCarbs, self.maxCarbs,
+        #      self.weightTaste, self.weightPrice, totalCalories, totalFat, totalProtein, totalCarbs, self.calories, self.size)
 
     def objective_function(self, variables):
         totalPrice = np.sum(variables*self.prices)

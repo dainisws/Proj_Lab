@@ -76,8 +76,10 @@ def scrapeBarbora():
                     try:
                         value = item.find("div", class_="md:tw-text-xs").get_text()
                         match = re.search(r"(\d+,\d+)", value)
-                        if match:
+                        if match and ("/kg" in value or "/l" in value):
                             price = float(match.group(1).replace(',', '.'))
+                        else:
+                            continue
                     except:
                         continue
 
@@ -177,9 +179,13 @@ def scrapeRimi():
                         fullUrl = mainUrl + productCard.find('a', class_='js-gtm-eec-product-click')['href']
                         with app.app_context():
                             if (db.session.query(db.exists().where(FoodRimi.link == fullUrl)).scalar()):
-                                val = re.search(r'\d+\,\d+|\d+', productCard.find("p", class_="card__price-per").get_text())
-                                price = float(val.group().replace(",", "."))
-                                updatePriceRimi(fullUrl, price)
+                                txt = productCard.find("p", class_="card__price-per").get_text()
+                                if "/l" in txt or "/kg" in txt:
+                                    val = re.search(r'\d+\,\d+|\d+', txt)
+                                    price = float(val.group().replace(",", "."))
+                                    updatePriceRimi(fullUrl, price)
+                                else:
+                                    continue
                             else:
                                 productUrls.append(fullUrl)
 
@@ -192,8 +198,12 @@ def scrapeRimi():
 
                     # get price
                     try:
-                        val = re.search(r'\d+\,\d+|\d+', soup2.find('p', class_='price-per').get_text())
-                        price = float(val.group().replace(",", "."))
+                        txt = soup2.find('p', class_='price-per').get_text()
+                        if "/l" in txt or "/kg" in txt:
+                            val = re.search(r'\d+\,\d+|\d+', txt)
+                            price = float(val.group().replace(",", "."))
+                        else:
+                            continue
                     except:
                         #traceback.print_exc()
                         continue

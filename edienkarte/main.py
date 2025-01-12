@@ -66,14 +66,14 @@ def getrimigroups():
 def getbarboraratings():
     if session.get('user_id', None) is None:
         return "No session found", 400
-    items = db.session.query(FoodRatingBarbora.food_id, FoodRatingBarbora.rating).join(User, User.id == FoodRatingBarbora.user_id).filter(User.email == session.get('user_id', None)).all()
+    items = db.session.query(FoodRatingBarbora.food_id, FoodRatingBarbora.rating).join(User, User.id == FoodRatingBarbora.user_id).filter(User.username == session.get('user_id', None)).all()
     items_list = [{"id": item.food_id, "rating": item.rating} for item in items]
     return jsonify(items_list)
 @app.route('/getrimiratings', methods=['GET'])
 def getrimiratings():
     if session.get('user_id', None) is None:
         return "No session found", 400
-    items = db.session.query(FoodRatingRimi.food_id, FoodRatingRimi.rating).join(User, User.id == FoodRatingRimi.user_id).filter(User.email == session.get('user_id', None)).all()
+    items = db.session.query(FoodRatingRimi.food_id, FoodRatingRimi.rating).join(User, User.id == FoodRatingRimi.user_id).filter(User.username == session.get('user_id', None)).all()
     items_list = [{"id": item.food_id, "rating": item.rating} for item in items]
     return jsonify(items_list)
 
@@ -132,7 +132,7 @@ def profile():
             return "Something went wrong...", 400
         
         if file and allowed_file(file.filename):
-            user = db.session.query(User).filter_by(email=session.get('user_id', None)).first()
+            user = db.session.query(User).filter_by(username=session.get('user_id', None)).first()
             user.profile_picture = file.read()
             db.session.commit()
             return redirect(url_for('profile'))
@@ -144,7 +144,7 @@ def profile():
 def get_image():
     default_image_path = os.path.join('static/images', 'pfp.jpg')
     try:
-        image = db.session.query(User.profile_picture).filter_by(email=session.get('user_id', None)).first()
+        image = db.session.query(User.profile_picture).filter_by(username=session.get('user_id', None)).first()
         if not image:
             return send_file(default_image_path, mimetype='image/jpeg')
         else:    
@@ -232,7 +232,7 @@ def logout():
 def deleteProfile():
     if session.get('user_id', None) is not None:
         try:
-            db.session.delete(db.session.query(User).filter_by(email=session.get('user_id', None)).first())
+            db.session.delete(db.session.query(User).filter_by(username=session.get('user_id', None)).first())
             db.session.commit() 
             session.pop('user_id', None)
         except Exception as e: print(e)
@@ -284,8 +284,8 @@ def compute():
         a9 = float(data.get('weightTaste'))
         a10 = float(data.get('weightPrice'))
         store = data.get('store')
-
-        uid = db.session.query(User.id).filter_by(email=session.get('user_id',None)).first()[0]
+        
+        uid = db.session.query(User.id).filter_by(username=session.get('user_id',None)).first()[0]
 
         # updating food ratings
         if store == "Rimi":

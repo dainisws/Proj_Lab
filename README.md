@@ -73,12 +73,45 @@ Prioritātēm izvelētā metode: MoSCoW
 |C|Varētu būt (Could have)|
 |W|Nevajadzētu būt (Would not have)|
 
+##  •Algoritms
+![alt text](https://github.com/dainisws/Proj_Lab/blob/787104153b4390c3513d075c29569e04d3bedc1b/algoritms.jpeg)
+
 ##  •Konceptu modelis
-![alt text](https://raw.githubusercontent.com/dainisws/Proj_Lab/refs/heads/main/KonceptuModelis.png)
+![alt text](https://github.com/dainisws/Proj_Lab/blob/b29b8077ea2b86cf281094b2a897dd7491895858/konceptu%20modelis.jpeg)
 
 ##  •Tehnoloģiju steks
-![alt text](https://raw.githubusercontent.com/dainisws/Proj_Lab/refs/heads/main/tehnologiju_steks.png)
+![alt text](https://github.com/dainisws/Proj_Lab/blob/787104153b4390c3513d075c29569e04d3bedc1b/tehnologiju_steks.png)
 
 ## •Risinājuma novērtēšanas plāns
 ![image](https://github.com/user-attachments/assets/be2db296-70cb-44b7-bcb7-778b73a58806)
+
+## •Novērtēšanas rezultāti
+![alt text](https://github.com/dainisws/Proj_Lab/blob/787104153b4390c3513d075c29569e04d3bedc1b/grafiks.jpeg)
+## •Secinājums
+Diagramma parāda, ka, palielinoties apstrādāto produktu skaitam, patērētais laiks pieaug proporcionāli, kas var ievērojami ietekmēt programmas veiktspēju, samazinot tās efektivitāti
+
+## •Plakāts
+![alt text](https://github.com/dainisws/Proj_Lab/blob/7df5e3d1be4f05d9fc4f1dbc26688c878555a2bd/plakats.png)
+
+## •Kā palaist mājaslapu
+1.Ielādēt mapi "edienkarte" no GitHub.
+<br>2.Instalēt nepieciešamās Python bibliotēkas: pip install beautifulsoup4, pip install scipy, pip install selenium, pip install pyyaml, pip install Flask, pip install Flask-SQLAlchemy, pip install Werkzeug.  <br>3.Palaist failu main.py (iespējams, izmantojot Python).
+<br>4.Mājaslapa būs pieejama Firefox pārlūkā, atverot adresi http://localhost:5000.
+
+## •Grupas dalībnieku veikums
+| Dalībnieks              | Paveiktais                                                                 |
+|-------------------------|----------------------------------------------------------------------------|
+| Valters Eduards Jansons  | Ievietoja datu bāzē produktus/receptes  <br> Izveidoja matemātiskās programmēšanas modeli  <br> Apvienoja visu izveidoto  <br> Izveidoja Tehnoloģiju steku |
+| Dainis Kudrjavcevs       | Izveidoja Līdzīgo risinājumu pārskatu  <br> Izdomāja projekta nosaukumu un Izveidoja plakātu un logo <br> Veica testēšanu|
+| Pāvels Kudrjavcevs       | Izveidoja Konceptu modeli  <br> Veica dokumentāciju |
+| Eduards Seļakovs         | Izstrādāja lapas dizainu |
+| Lauris Senkāns           | Izstrādāja autentifikāciju |
+
+## •Secinājumi
+Mūsu programma "Sabalansētas ēdienkartes plānošana" ir veiksmīgi izveidota, un visas tās funkcionalitātes darbojas korekti. Tomēr, neskatoties uz to, mēs nepaguvām to pilnībā integrēt, jo neizvietojām to uz Azure servera.
+
+
+
+
+
 

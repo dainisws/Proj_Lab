@@ -81,10 +81,6 @@ def getrimiratings():
 def documentation():
     return render_template('doc.html', username=session.get('user_id', None))
 
-@app.route('/legal')
-def legal():
-    return render_template('legal.html', username=session.get('user_id', None))
-
 @app.route('/cart', methods=['GET', 'POST'])
 def cart():
     if session.get('user_id', None) is None:

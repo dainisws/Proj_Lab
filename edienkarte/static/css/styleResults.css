@@ -221,3 +221,13 @@ html, body {
         color: rgb(231, 198, 105);
         text-decoration: none;
     }
+
+    .stats {
+        margin-bottom: 16px;
+        font-size: 10px;
+    }
+
+    .stats p {
+        margin: 5px auto;
+        text-align: center;
+    }

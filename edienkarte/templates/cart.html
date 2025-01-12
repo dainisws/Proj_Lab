@@ -22,6 +22,15 @@
   <div class="content-boxes">
     <!-- Box 1 -->
     <div class="box">
+        <h1>Shopping Cart</h1>
+        <div class="stats">
+            <p>Total Calories: {{ calories }}</p>
+            <p>Total Fat: {{ fat }}</p>
+            <p>Total Protein: {{ protein }}</p> 
+            <p>Total Carbs: {{ carbs }}</p>
+            <p>Total Price: {{ price }}</p>
+            <button class="results-button" onclick="window.location.href='/compute'">Back To Results</button>
+        </div>
         {% if items %}
             {% for item in items %}
                 <div class="small-box">
@@ -33,6 +42,7 @@
                         <p>Fat: {{ item['3'] }}g</p>
                         <p>Protein: {{ item['4'] }}g</p>
                         <p>Carbohydrates: {{ item['5'] }}g</p>
+                        <p>Price: {{ item['0'] }}€</p>
                         <button class="delete-button" onclick="deleteItem({{ item['id'] }})">Delete</button>
                     </div>
                 </div>

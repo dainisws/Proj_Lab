@@ -6,14 +6,14 @@ displayItems1(items.map(item => ({ name: item[6], link: item[7], amount: item[8]
 displayItems2(items2.map(item => ({ name: item[6], link: item[7], amount: item[8], id: item.id })));
 
 
-function updateAmount(id, input) {
+function updateAmount1(id, input) {
   let value = parseFloat(input.value);
   if ((value != "" && isNaN(value)) || value < 0 || value > 9999999) {
     input.value = "";
   }
   items = items.map(item => {
     if (item.id === id) {
-      item.amount = value;
+      item[8] = value;
     }
     return item;
   });
@@ -24,9 +24,9 @@ function updateAmount2(id, input) {
     if ((value != "" && isNaN(value)) || value < 0 || value > 9999999) {
       input.value = "";
     }
-    items = items2.map(item => {
+    items2 = items2.map(item => {
       if (item.id === id) {
-        item.amount = value;
+        item[8] = value;
       }
       return item;
     });
@@ -77,7 +77,7 @@ function displayItems1(filteredItems) {
   }
 
   filteredItems.forEach((item) => {
-    resultsList1.innerHTML += `<div class="food-item"><label><a href="${item.link}" target="_blank">${item.name}</a></label><div><input type="number" oninput="updateAmount(${item.id}, this)" min="1" max="9999999" pattern="^([0-9]|10)$" value="${item.amount}"><button class="add-to-cart-btn" onclick="addToCart1(${item.id})">Add to Cart</button></div></div><hr>`;
+    resultsList1.innerHTML += `<div class="food-item"><label><a href="${item.link}" target="_blank">${item.name}</a></label><div><input type="number" oninput="updateAmount1(${item.id}, this)" min="1" max="9999999" pattern="^([0-9]|10)$" value="${item.amount}"><button class="add-to-cart-btn" onclick="addToCart1(${item.id})">Add to Cart</button></div></div><hr>`;
   });
 }
 

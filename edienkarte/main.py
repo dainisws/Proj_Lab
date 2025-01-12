@@ -87,11 +87,32 @@ def cart():
         redirect(url_for('home'))
     if request.method == 'POST':
         if session.get('cartItems', None) != None:
+            removed_items = [item for item in session.get('cartItems', []) if item['id'] == request.json]
+            for item in removed_items:
+                session['totalPrice'] = session.get('totalPrice', 0) - float(item['0'])
+                session['totalCalories'] = session.get('totalCalories', 0) - float(item['2'])
+                session['totalFat'] = session.get('totalFat', 0) - float(item['3'])
+                session['totalProtein'] = session.get('totalProtein', 0) - float(item['4'])
+                session['totalCarbs'] = session.get('totalCarbs', 0) - float(item['5'])
             session['cartItems'] = [item for item in session.get('cartItems', []) if item['id'] != request.json]
             return jsonify({'success': True}), 200
         else:
             return jsonify({'success': False}), 400
-    return render_template('cart.html', username=session.get('user_id', None), items=session.get('cartItems', []))
+    cartItems = session.get('cartItems', [])
+    rounded_items = [
+    {
+        key: round(value, 1) if isinstance(value, (int, float)) else value
+        for key, value in item.items()
+    }
+    for item in cartItems
+]
+    return render_template('cart.html', username=session.get('user_id', None), 
+                           items=rounded_items, 
+                           calories = round(session.get('totalCalories', 0.0), 2), 
+                           fat = round(session.get('totalFat', 0.0), 2), 
+                           protein = round(session.get('totalProtein', 0.0), 2), 
+                           carbs = round(session.get('totalCarbs', 0.0), 2), 
+                           price = round(session.get('totalPrice', 0.0), 2))
 
 @app.route('/profile', methods=['GET', 'POST'])
 def profile():
@@ -199,6 +220,8 @@ def logout():
         session.pop('totalFat', None)
     if session.get('totalProtein', None) is not None:
         session.pop('totalProtein', None)
+    if session.get('totalPrice', None) is not None:
+        session.pop('totalPrice', None)
     if session.get('results', None) is not None:
         session.pop('results', None)
     if session.get('resultsOptimal', None) is not None:
@@ -225,12 +248,14 @@ def compute():
         data = request.get_json()
         if data.get('computeType') == "init":
             session['inputdata'] = data
+            session['totalPrice'] = 0.0
             session['totalCalories'] = 0.0
             session['totalFat'] = 0.0
             session['totalProtein'] = 0.0
             session['totalCarbs'] = 0.0
             session['cartItems'] = []
         else: #add to cart link calories protein fat carbs amount
+            session['totalPrice'] = session.get('totalPrice', 0) + float(data.get('item')['0']) * float(data.get('item')['8'])
             session['totalCalories'] = session.get('totalCalories', 0) + float(data.get('item')['2']) * float(data.get('item')['8'])
             session['totalFat'] = session.get('totalFat', 0) + float(data.get('item')['3']) * float(data.get('item')['8'])
             session['totalProtein'] = session.get('totalProtein', 0) + float(data.get('item')['4']) * float(data.get('item')['8'])
@@ -238,10 +263,11 @@ def compute():
             if 'cartItems' not in session:
                 session['cartItems'] = []
             dat = data.get('item')
-            dat['2'] = round(float(data.get('item')['2']) * float(data.get('item')['8']), 1)
-            dat['3'] = round(float(data.get('item')['3']) * float(data.get('item')['8']), 1)
-            dat['4'] = round(float(data.get('item')['4']) * float(data.get('item')['8']), 1)
-            dat['5'] = round(float(data.get('item')['5']) * float(data.get('item')['8']), 1)
+            dat['0'] = float(data.get('item')['0']) * float(data.get('item')['8'])
+            dat['2'] = float(data.get('item')['2']) * float(data.get('item')['8'])
+            dat['3'] = float(data.get('item')['3']) * float(data.get('item')['8'])
+            dat['4'] = float(data.get('item')['4']) * float(data.get('item')['8'])
+            dat['5'] = float(data.get('item')['5']) * float(data.get('item')['8'])
             dat['id'] = len(session['cartItems'])
             session['cartItems'].append(dat)
             data = session['inputdata']
@@ -356,14 +382,24 @@ def compute():
             item for item in arr 
             if all(value is not None for value in item)
         ]
-        results = SolverModel(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, arr, session['totalCalories'], session['totalFat'], session['totalProtein'], session['totalCarbs']).solve()
+
+        cart_links = [item['7'] for item in session.get('cartItems', [])]
+        filtered_arr = [record for record in arr if record[8] not in cart_links]
+        results = SolverModel(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, filtered_arr, session['totalCalories'], session['totalFat'], session['totalProtein'], session['totalCarbs']).solve()
         resultsOptimal = results[results[:, -1].astype(float) > 0.05]
         session['results'] = results.tolist()
         session['resultsOptimal'] = resultsOptimal.tolist()
         return jsonify({'success': True}), 200
         #except:
         #    return jsonify({'success': False}), 400
-    return render_template('results.html', username=session.get('user_id', None), results=session.get('results', None), resultsOptimal=session.get('resultsOptimal', None))
+    return render_template('results.html', username=session.get('user_id', None), 
+                            results=session.get('results', None), 
+                            resultsOptimal=session.get('resultsOptimal', None), 
+                            calories = round(session.get('totalCalories', 0.0), 2), 
+                            fat = round(session.get('totalFat', 0.0), 2), 
+                            protein = round(session.get('totalProtein', 0.0), 2), 
+                            carbs = round(session.get('totalCarbs', 0.0), 2), 
+                            price = round(session.get('totalPrice', 0.0), 2))
 
 @app.route('/debug') # Remove this later
 def debug():

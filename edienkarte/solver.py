@@ -48,7 +48,8 @@ class SolverModel():
         self.names = np.array([item[7] for item in arr])
         self.links = np.array([item[8] for item in arr])
         self.size = len(self.carbs)
-        print(self.minCalories, self.maxCalories, totalCalories, minCalories, self.protein)
+        print(self.minCalories, self.maxCalories, self.minFat, self.maxFat, self.minProtein, self.maxProtein, self.minCarbs, self.maxCarbs,
+              self.weightTaste, self.weightPrice, totalCalories, totalFat, totalProtein, totalCarbs, self.calories)
 
     def objective_function(self, variables):
         totalPrice = np.sum(variables*self.prices)
@@ -57,34 +58,42 @@ class SolverModel():
 
     def constraint_min_calories(self, variables):
         totalCalories = np.sum(variables*self.calories)
+        #print("totalCalories: ", totalCalories)
         return totalCalories - self.minCalories
 
     def constraint_max_calories(self, variables):
         totalCalories = np.sum(variables*self.calories)
+        #print("totalCalories: ", totalCalories)
         return self.maxCalories - totalCalories
 
     def constraint_min_fat(self, variables):
         totalFat = np.sum(variables*self.fat)
+        #print("totalFat: ", totalFat)
         return totalFat - self.minFat
 
     def constraint_max_fat(self, variables):
         totalFat = np.sum(variables*self.fat)
+        #print("totalFat: ", totalFat)
         return self.maxFat - totalFat
 
     def constraint_min_protein(self, variables):
         totalProtein = np.sum(variables*self.protein)
+        #print("totalProtein: ", totalProtein)
         return totalProtein - self.minProtein
 
     def constraint_max_protein(self, variables):
         totalProtein = np.sum(variables*self.protein)
+        #print("totalProtein: ", totalProtein)
         return self.maxProtein - totalProtein
 
     def constraint_min_carbs(self, variables):
         totalCarbs = np.sum(variables*self.carbs)
+        #print("totalCarbs: ", totalCarbs)
         return totalCarbs - self.minCarbs
 
     def constraint_max_carbs(self, variables):
         totalCarbs = np.sum(variables*self.carbs)
+        #print("totalCarbs: ", totalCarbs)
         return self.maxCarbs - totalCarbs
 
     def solve(self):

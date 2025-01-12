@@ -145,7 +145,7 @@ html, body {
           background-color: #ff9800;
         }
   
-        .buy-button {
+        .results-button {
           margin-top: 15px;
           background-color: rgb(102, 255, 115);
           color: #000;
@@ -156,7 +156,7 @@ html, body {
           font-size: 14px;
         }
     
-        .buy-button:hover {
+        .results-button:hover {
           background-color: #00ff00;
         }
         
@@ -204,4 +204,15 @@ html, body {
         transition: 0.3s;
         color: rgb(231, 198, 105);
         text-decoration: none;
+    }
+
+    .stats {
+        margin-bottom: 16px;
+        font-size: 10px;
+        margin-top: 16px;
+    }
+
+    .stats p {
+        margin: 5px auto;
+        text-align: center;
     }

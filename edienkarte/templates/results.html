@@ -36,7 +36,14 @@
       <div class="box">
         <div class="section">
             <h1>Results</h1>
-            <p style="margin-bottom: 40px;">Choose how much of each food you want (in grams) and optimal results will be recalculated.</p>
+            <p>Choose how much of each food you want (in grams) and optimal results will be recalculated.</p>
+            <div class="stats">
+                <p>Total Calories: {{ calories }}</p>
+                <p>Total Fat: {{ fat }}</p>
+                <p>Total Protein: {{ protein }}</p> 
+                <p>Total Carbs: {{ carbs }}</p>
+                <p>Total Price: {{ price }}</p>
+            </div>
             <h2>Optimal Results</h2>
             <input type="text" id="searchInput1" placeholder="Search items..." oninput="filterItems1()"/>
             <div class="food-section" id="food-section-1">

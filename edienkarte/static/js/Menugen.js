@@ -112,8 +112,8 @@ function compute() {
   const maxFat = document.getElementById("maxFat").value;
   const minProtein = document.getElementById("minProtein").value;
   const maxProtein = document.getElementById("maxProtein").value;
-  const minCarbs = document.getElementById("minCalories").value;
-  const maxCarbs = document.getElementById("maxCalories").value;
+  const minCarbs = document.getElementById("minCarbs").value;
+  const maxCarbs = document.getElementById("maxCarbs").value;
   const weightTaste = document.getElementById("weights").value / 100.0;
   const weightPrice = 1 - weightTaste;
   let store = "Rimi"

@@ -88,5 +88,18 @@ Prioritātēm izvelētā metode: MoSCoW
 ## •Novērtēšanas rezultāti
 ![alt text](https://github.com/dainisws/Proj_Lab/blob/787104153b4390c3513d075c29569e04d3bedc1b/grafiks.jpeg)
 
+## •Plakāts
+![alt text](https://github.com/dainisws/Proj_Lab/blob/7df5e3d1be4f05d9fc4f1dbc26688c878555a2bd/plakats.png)
+
+## •Grupas dalībnieku veikums
+| Dalībnieks              | Paveiktais                                                                 |
+|-------------------------|----------------------------------------------------------------------------|
+| Valters Eduards Jansons  | Ievietoja datu bāzē produktus/receptes  <br> Izveidoja matemātiskās programmēšanas modeli  <br> Apvienoja visu izveidoto  <br> Izveidoja Tehnoloģiju steku |
+| Dainis Kudrjavcevs       | Izveidoja Līdzīgo risinājumu pārskatu  <br> Izdomāja projekta nosaukumu un Izveidoja plakātu un logo <br> Veica dokumentāciju|
+| Pāvels Kudrjavcevs       | Izveidoja Konceptu modeli  <br> Veica testēšanu |
+| Eduards Seļakovs         | Izstrādāja lapas dizainu |
+| Lauris Senkāns           | Izstrādāja autentifikāciju |
+
+
 
 

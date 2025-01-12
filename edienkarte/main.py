@@ -111,12 +111,12 @@ def cart():
     for item in cartItems
 ]
     return render_template('cart.html', username=session.get('user_id', None), 
-                           items=rounded_items, 
-                           calories = round(session.get('totalCalories', 0.0), 2), 
-                           fat = round(session.get('totalFat', 0.0), 2), 
-                           protein = round(session.get('totalProtein', 0.0), 2), 
-                           carbs = round(session.get('totalCarbs', 0.0), 2), 
-                           price = round(session.get('totalPrice', 0.0), 2))
+                            items=rounded_items, 
+                            calories = max(0, round(session.get('totalCalories', 0.0), 2)), 
+                            fat = max(0, round(session.get('totalFat', 0.0), 2)), 
+                            protein = max(0, round(session.get('totalProtein', 0.0), 2)), 
+                            carbs = max(0, round(session.get('totalCarbs', 0.0), 2)), 
+                            price = max(0, round(session.get('totalPrice', 0.0), 2)))
 
 @app.route('/profile', methods=['GET', 'POST'])
 def profile():
@@ -241,9 +241,9 @@ def deleteProfile():
 
 @app.route('/compute', methods=['GET', 'POST'])
 def compute():
-    milli_sec = int(round(time.time() * 1000))
     if session.get('user_id', None) is None:
         return render_template('register.html', username=session.get('user_id', None))
+    data = session.get('inputdata', None)
     if request.method == 'POST':
         #try:
         data = request.get_json()
@@ -272,7 +272,9 @@ def compute():
             dat['id'] = len(session['cartItems'])
             session['cartItems'].append(dat)
             data = session['inputdata']
+        return jsonify({'success': True}), 200
 
+    if data != None:
         a1 = float(data.get('minCalories'))
         a2 = float(data.get('maxCalories'))
         a3 = float(data.get('minFat'))
@@ -394,19 +396,16 @@ def compute():
         global result_data, optimal_result_data
         result_data[session['user_id']] = results.tolist()
         optimal_result_data[session['user_id']] = resultsOptimal.tolist()
-
-        delta = int(round(time.time() * 1000)) - milli_sec
-        return jsonify({'success': True}), 200
         #except:
         #    return jsonify({'success': False}), 400
     return render_template('results.html', username=session.get('user_id', None), 
                             results=result_data.get(session['user_id'], None), 
                             resultsOptimal=optimal_result_data.get(session['user_id'], None), 
-                            calories = round(session.get('totalCalories', 0.0), 2), 
-                            fat = round(session.get('totalFat', 0.0), 2), 
-                            protein = round(session.get('totalProtein', 0.0), 2), 
-                            carbs = round(session.get('totalCarbs', 0.0), 2), 
-                            price = round(session.get('totalPrice', 0.0), 2))
+                            calories = max(0, round(session.get('totalCalories', 0.0), 2)), 
+                            fat = max(0, round(session.get('totalFat', 0.0), 2)), 
+                            protein = max(0, round(session.get('totalProtein', 0.0), 2)), 
+                            carbs = max(0, round(session.get('totalCarbs', 0.0), 2)), 
+                            price = max(0, round(session.get('totalPrice', 0.0), 2)))
 
 @app.route('/debug') # Remove this later
 def debug():
